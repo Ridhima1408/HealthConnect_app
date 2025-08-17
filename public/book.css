@@ -1,0 +1,128 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f8fb;
+  color: #333;
+}
+
+/* Navbar styles */
+nav {
+  background-color: #0a3d62;
+  padding: 1rem 0;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+nav h1 {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.nav-links a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  text-decoration: underline;
+}
+
+/* Main content */
+.content {
+  padding: 40px 0;
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Appointment section */
+.appointment-section {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.appointment-section h2 {
+  margin-bottom: 15px;
+  color: #0a3d62;
+}
+
+.appointment-section p {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Form styles */
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.appointment-form label {
+  align-self: flex-start;
+  margin: 10px 0 5px;
+  font-weight: 500;
+}
+
+.appointment-form input,
+.appointment-form select {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.appointment-form input:focus,
+.appointment-form select:focus {
+  border-color: #0a3d62;
+  outline: none;
+}
+
+.appointment-form button {
+  background-color: #38ada9;
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-form button:hover {
+  background-color: #079992;
+}
+
+/* Footer */
+footer {
+  background-color: #0a3d62;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 60px;
+}

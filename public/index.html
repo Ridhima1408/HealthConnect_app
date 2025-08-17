@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealthConnect+ | Home</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <h1 class="logo">HealthConnect+</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="book.html">Book Appointment</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h2>Welcome to HealthConnect+</h2>
+        <p>Your trusted partner in health and wellness</p>
+        <a href="book.html" class="hero-btn">Book an Appointment</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Why Choose Us Section -->
+  <main class="content container">
+    <section class="why-choose">
+      <h3>Why Choose Us?</h3>
+      <div class="features">
+        <div class="feature">
+          <img src="/1.jpg" alt="Appointment Icon" />
+          <p>Book doctor appointments online</p>
+        </div>
+        <div class="feature">
+          <img src="/2.jpg" alt="Health Records Icon" />
+          <p>Access your health records securely</p>
+        </div>
+        <div class="feature">
+          <img src="/3.jpg" alt="Virtual Assistant Icon" />
+          <p>24x7 Virtual Assistant Support</p>
+        </div>
+        <div class="feature">
+          <img src="/4.jpg" alt="Verified Doctors Icon" />
+          <p>Trusted and Verified Doctors</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Symptom Checker Section -->
+    <section class="symptom-checker">
+      <h3>Symptom Checker</h3>
+      <p>Type your symptoms and get suggestions instantly</p>
+      <input type="text" id="symptomInput" placeholder="e.g., headache, fever" />
+      <button onclick="checkSymptoms()">Check</button>
+      <div id="symptomResult"></div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+      <h3>Patient Blogs</h3>
+      <p>Read and share your experiences about treatments, recovery, and our hospital.</p>
+
+      <!-- Blog Form -->
+      <div class="blog-form">
+        <h4>Write a Blog</h4>
+        <input type="text" id="blogAuthor" placeholder="Your Name" />
+        <textarea id="blogContent" placeholder="Write your experience..." rows="4"></textarea>
+        <button onclick="addBlog()">Post Blog</button>
+      </div>
+
+      <!-- Blog List -->
+      <div id="blogList" class="blog-list">
+        <h4>Recent Blogs</h4>
+        <div id="blogsContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Chatbot -->
+  <link rel="stylesheet" href="css/chatbot.css">
+  <div class="chatbot-container">
+    <button class="chatbot-icon" onclick="toggleChatbot()">💬</button>
+    <div class="chatbot-dialog" id="chatbot">
+      <div class="chatbot-header">
+        <span>Ask Me Anything</span>
+        <button onclick="toggleChatbot()">×</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages"></div>
+      <input type="text" id="chatbot-input" placeholder="Ask a question..." onkeydown="handleKey(event)">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    // Symptom Checker
+    function checkSymptoms() {
+      const input = document.getElementById('symptomInput').value.toLowerCase();
+      const result = document.getElementById('symptomResult');
+      if (!input.trim()) {
+        result.innerHTML = "<p>Please enter your symptoms.</p>";
+        return;
+      }
+
+      if (input.includes("fever") && input.includes("cough")) {
+        result.innerHTML = "<p>Possible causes: Flu, COVID-19. Please consult a doctor.</p>";
+      } else if (input.includes("headache")) {
+        result.innerHTML = "<p>Possible causes: Migraine, Tension Headache.</p>";
+      } else {
+        result.innerHTML = "<p>Symptom not recognized. Please consult a physician for accurate diagnosis.</p>";
+      }
+    }
+
+    // Blog Section Logic
+    window.onload = loadBlogs;
+
+    function addBlog() {
+      const author = document.getElementById("blogAuthor").value.trim();
+      const content = document.getElementById("blogContent").value.trim();
+
+      if (!author || !content) {
+        alert("Please fill in both name and content.");
+        return;
+      }
+
+      const newBlog = {
+        author: author,
+        content: content,
+        date: new Date().toLocaleString()
+      };
+
+      let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+      blogs.unshift(newBlog);
+      localStorage.setItem("blogs", JSON.stringify(blogs));
+
+      document.getElementById("blogAuthor").value = "";
+      document.getElementById("blogContent").value = "";
+
+      loadBlogs();
+    }
+
+    function loadBlogs() {
+      let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+      const container = document.getElementById("blogsContainer");
+      container.innerHTML = "";
+
+      if (blogs.length === 0) {
+        container.innerHTML = "<p>No blogs yet. Be the first to share your experience!</p>";
+        return;
+      }
+
+      blogs.forEach(blog => {
+        const blogDiv = document.createElement("div");
+        blogDiv.className = "blog-post";
+
+        blogDiv.innerHTML = `
+          <div class="author"><strong>${blog.author}</strong></div>
+          <div class="date">${blog.date}</div>
+          <div class="content">${blog.content}</div>
+        `;
+
+        container.appendChild(blogDiv);
+      });
+    }
+
+    // Chatbot
+    const faqKeywords = [
+      {
+        keywords: ["hii", "hi", "hello", "who are you"],
+        response: "Hey! How can I assist you today?"
+      },
+      {
+        keywords: ["site", "about", "platform", "purpose", "goal", "what is this"],
+        response: "This is HealthConnect+, your trusted platform for booking doctor appointments, checking symptoms, and connecting with healthcare providers."
+      },
+      {
+        keywords: ["appointment", "book", "doctor"],
+        response: "You can easily book an appointment using the 'Book Appointment' page."
+      },
+      {
+        keywords: ["contact", "reach", "help"],
+        response: "Visit our Contact page to get in touch with us."
+      }
+    ];
+
+    function toggleChatbot() {
+      const chatbot = document.getElementById("chatbot");
+      chatbot.style.display = chatbot.style.display === "flex" ? "none" : "flex";
+    }
+
+    function handleKey(e) {
+      if (e.key === "Enter") {
+        const input = document.getElementById("chatbot-input");
+        const message = input.value.trim();
+        if (message !== "") {
+          addMessage(message, "user-message");
+          respondTo(message.toLowerCase());
+          input.value = "";
+        }
+      }
+    }
+
+    function addMessage(message, className) {
+      const msgContainer = document.getElementById("chatbot-messages");
+      const msg = document.createElement("div");
+      msg.className = className;
+      msg.textContent = message;
+      msgContainer.appendChild(msg);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+    }
+
+    function respondTo(query) {
+      let response = "I'm sorry, I couldn't understand your question. Please try asking about appointments, symptoms, or contact.";
+
+      for (let entry of faqKeywords) {
+        for (let keyword of entry.keywords) {
+          if (query.includes(keyword)) {
+            response = entry.response;
+            break;
+          }
+        }
+        if (response !== "I'm sorry, I couldn't understand your question. Please try asking about appointments, symptoms, or contact.") break;
+      }
+
+      setTimeout(() => addMessage(response, "bot-message"), 500);
+    }
+  </script>
+
+  <!-- Blog Section Styles -->
+  <style>
+    .blog-section {
+      margin: 40px auto;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 12px;
+      max-width: 900px;
+    }
+    .blog-form {
+      margin-bottom: 20px;
+    }
+    .blog-form input, .blog-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins', sans-serif;
+    }
+    .blog-form button {
+      background: #0077cc;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .blog-list .blog-post {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .blog-list .author {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .blog-list .date {
+      font-size: 0.9em;
+      color: gray;
+      margin-bottom: 8px;
+    }
+  </style>
+</body>
+</html>
+
+

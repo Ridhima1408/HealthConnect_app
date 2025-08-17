@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Appointment | HealthConnect+</title>
+  <link rel="stylesheet" href="book.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <h1 class="logo">HealthConnect+</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="book.html" class="active">Book Appointment</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Appointment Form Section -->
+  <main class="content container">
+    <section class="appointment-section">
+      <h2>Book an Appointment</h2>
+      <p>Please fill in your details, select your doctor, and choose a convenient date for your appointment.</p>
+
+      <form class="appointment-form" action="/book" method="POST">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+        <label for="date">Preferred Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <!-- New Doctor Selection Field -->
+        <label for="doctor">Select Doctor:</label>
+        <select id="doctor" name="doctor" required>
+          <option value="">-- Choose a Doctor --</option>
+          <option value="dr-smith">Dr. Ramesh – Cardiologist</option>
+          <option value="dr-williams">Dr. Raju – Dermatologist</option>
+          <option value="dr-brown">Dr. Param – Orthopedic</option>
+          <option value="dr-jones">Dr. Rinku – General Physician</option>
+        </select>
+
+        <button type="submit">Book Now</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
+  </footer>
+</body>
+</html>

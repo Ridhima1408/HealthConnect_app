@@ -1,0 +1,148 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f3f8fc;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+ 
+/* Navbar */
+.navbar {
+  background-color: #0a3d62;
+  padding: 1rem 0;
+}
+ 
+.nav-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ 
+/* Logo */
+.logo {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+  user-select: none;
+}
+ 
+/* Navigation Links Container */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+ 
+.nav-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+ 
+.nav-links a:hover,
+.nav-links a.active {
+  text-decoration: underline;
+  color: #79a7d3;
+}
+ 
+/* Login Section */
+.login-section {
+  width: 90%;
+  max-width: 400px;
+  margin: 60px auto 100px auto; /* bottom margin to separate from footer */
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+ 
+/* Title */
+.login-section h2 {
+  text-align: center;
+  color: #0a3d62;
+  margin-bottom: 30px;
+}
+ 
+/* Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.login-form label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #444;
+}
+ 
+.login-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+}
+ 
+.login-form input:focus {
+  border-color: #0a3d62;
+  outline: none;
+}
+ 
+.login-form button {
+  padding: 12px;
+  background-color: #0a3d62;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+ 
+.login-form button:hover {
+  background-color: #075089;
+}
+ 
+/* Signup Text */
+.signup-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+ 
+.signup-text a {
+  color: #0a3d62;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+}
+ 
+.signup-text a:hover {
+  text-decoration: underline;
+}
+ 
+/* Footer */
+footer {
+  background-color: #0a3d62;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+  /* Stick footer to bottom if the page is short */
+}

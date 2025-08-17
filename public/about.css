@@ -1,0 +1,223 @@
+/* ---------------- Base Reset ---------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f8fb;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+  background-color: #0a3d62;
+  padding: 1rem 0;
+}
+ 
+.nav-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ 
+.logo {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600;
+  user-select: none;
+}
+ 
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+ 
+.nav-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+ 
+.nav-links a:hover,
+.nav-links a.active {
+  text-decoration: underline;
+  color: #79a7d3;
+}
+
+/* ---------------- Content Container ---------------- */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 0;
+}
+
+/* ---------------- About Section ---------------- */
+.about-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  color: #0a3d62;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.about-image {
+  flex: 1;
+  min-width: 280px;
+  text-align: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+/* ---------------- Facilities Section ---------------- */
+.facility-section {
+  margin-top: 60px;
+}
+
+.facility-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #0a3d62;
+  margin-bottom: 40px;
+}
+
+.facility-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.facility-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-5px);
+}
+
+.facility-card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.facility-card h3 {
+  font-size: 1.3rem;
+  color: #0a3d62;
+  margin-bottom: 10px;
+}
+
+.facility-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* ---------------- Blog Section ---------------- */
+.blog-section {
+  margin-top: 60px;
+}
+
+.blog-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #0a3d62;
+  margin-bottom: 40px;
+}
+
+.blog-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.blog-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 20px;
+}
+
+.blog-content h3 {
+  font-size: 1.2rem;
+  color: #0a3d62;
+  margin-bottom: 10px;
+}
+
+.blog-content p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.blog-content a {
+  display: inline-block;
+  color: #0a3d62;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.blog-content a:hover {
+  color: #79a7d3;
+  text-decoration: underline;
+}
+
+/* ---------------- Footer ---------------- */
+footer {
+  background-color: #0a3d62;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 50px;
+}

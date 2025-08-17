@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | HealthConnect+</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header>
+    <h1>HealthConnect+ Admin Portal</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+<script>
+  // Prevent direct access without login
+  if (sessionStorage.getItem("role") !== "admin") {
+      alert("Unauthorized access!");
+      window.location.href = "login.html";
+  }
+</script>
+
+  <div class="container">
+    <aside>
+  <ul>
+    <li><button onclick="showSection('appointments')">Manage Appointments</button></li>
+    <li><button onclick="showSection('doctors')">Manage Doctors</button></li>
+    <li><button onclick="showSection('patients')">Manage Patients</button></li>
+    <li><button onclick="showSection('feedback')">View Feedback</button></li>
+  </ul>
+</aside>
+
+    <main>
+      <section id="appointments" class="content-section">
+        <h2>Appointments</h2>
+        <p>List of all booked appointments will appear here...</p>
+      </section>
+
+      <section id="doctors" class="content-section hidden">
+        <h2>Doctors</h2>
+        <button onclick="addDoctor()">+ Add Doctor</button>
+        <div id="doctorList"></div>
+      </section>
+
+      <section id="patients" class="content-section hidden">
+        <h2>Patients</h2>
+        <p>List of registered patients will appear here...</p>
+      </section>
+
+      <section id="feedback" class="content-section hidden">
+        <h2>Feedback</h2>
+        <p>Patient feedback will be displayed here...</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

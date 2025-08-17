@@ -1,0 +1,326 @@
+/* Reset + Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  background-color: #f4f8fb;
+  color: #2f0e65;
+  scroll-behavior: smooth;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0a3d62, #145374);
+  color: white;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #38ada9;
+  transform: scale(1.05);
+}
+
+/* Hero */
+.hero {
+  background-image: url("build.jpg"); /* fixed */
+  background-size: cover;
+  background-position: center;
+  height: 450px;
+  position: relative;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.55);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  color: white;
+  text-align: center;
+  animation: slideUp 1.2s ease-in-out;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #38ada9, #079992);
+  color: white;
+  padding: 12px 24px;
+  margin-top: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.hero-btn:hover {
+  background: linear-gradient(135deg, #079992, #38ada9);
+  transform: translateY(-3px);
+}
+
+/* Why Choose Us */
+.why-choose {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.why-choose h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #0a3d62;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.feature {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+.feature img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+.feature:hover img {
+  transform: scale(1.1);
+}
+
+/* Symptom Checker */
+.symptom-checker {
+  background: linear-gradient(120deg, #eaf6f6, #dff9fb);
+  padding: 40px;
+  margin: 50px auto;
+  text-align: center;
+  border-radius: 15px;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.symptom-checker h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #0a3d62;
+}
+
+.symptom-checker input {
+  padding: 12px;
+  width: 60%;
+  max-width: 400px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.symptom-checker input:focus {
+  border-color: #38ada9;
+  box-shadow: 0 0 6px rgba(56, 173, 169, 0.5);
+}
+
+.symptom-checker button {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #38ada9, #079992);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.symptom-checker button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #079992, #38ada9);
+}
+
+#symptomResult {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* Blog Section */
+.blog-section {
+  margin: 50px auto;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.blog-section h3 {
+  text-align: center;
+  color: #0a3d62;
+  margin-bottom: 15px;
+}
+
+.blog-form input, .blog-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.blog-form button {
+  background: linear-gradient(135deg, #0077cc, #005fa3);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.blog-form button:hover {
+  background: linear-gradient(135deg, #005fa3, #0077cc);
+}
+
+.blog-list .blog-post {
+  background: #fff;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.blog-list .blog-post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Chatbot */
+.chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 420px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  animation: fadeIn 1s ease;
+}
+
+.chatbot-header {
+  background: linear-gradient(90deg, #0a3d62, #145374);
+  color: white;
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+
+.chatbot-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+.chatbot-input input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  outline: none;
+}
+
+.chatbot-input button {
+  background: #38ada9;
+  border: none;
+  color: white;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.chatbot-input button:hover {
+  background: #079992;
+}
+
+/* Footer */
+footer {
+  background: #0a3d62;
+  color: white;
+  text-align: center;
+  padding: 1.2rem 0;
+  margin-top: 60px;
+  font-size: 0.95rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideUp {
+  from {transform: translateY(40px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}

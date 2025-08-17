@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Register | HealthConnect+</title>
+<link rel="stylesheet" href="login.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+<div class="nav-container">
+<h1 class="logo">HealthConnect+</h1>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="book.html">Book Appointment</a>
+<a href="doctors.html">Doctors</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+</div>
+</nav>
+
+<!-- Register Form -->
+<main class="login-section">
+<h2>Create an Account</h2>
+<form action="/register" method="POST" class="login-form" autocomplete="off">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" placeholder="Choose a username" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
+
+    <button type="submit">Sign Up</button>
+    <p class="signup-text">
+        Already have an account? 
+        <a href="login.html">Login</a>
+    </p>
+</form>
+</main>
+
+<!-- Footer -->
+<footer>
+<p>&copy; 2025 HealthConnect+. All rights reserved.</p>
+</footer>
+</body>
+</html>
