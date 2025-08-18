@@ -17,7 +17,7 @@ body {
 .navbar {
   background: linear-gradient(90deg, #0a3d62, #145374);
   color: white;
-  padding: 1rem 0;
+  padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 1000;
