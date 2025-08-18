@@ -8,8 +8,10 @@ const app = express();
 const fs = require("fs");
 const mongoose = require('mongoose');
  
-mongoose.connect('mongodb://localhost:27017/healthconnect');
-mongoose.connection
+mongoose.connect('mongodb://localhost:27017/healthconnect', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 .then(() => console.log('MongoDB Connected'))
 .catch((err) => console.error('MongoDB connection error:', err));
 // Middleware
