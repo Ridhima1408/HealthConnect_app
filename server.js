@@ -103,28 +103,19 @@ app.post("/register", async (req, res) => {
   );
 });*/
 
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-    // Read stored users
-    let users = [];
-    if (fs.existsSync(usersFile)) {
-        const data = fs.readFileSync(usersFile, "utf-8");
-        if (data) {
-            users = JSON.parse(data);
-        }
-    }
+  // Check user in MongoDB
+  const user = await User.findOne({ username, password });
 
-    // Find matching user
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (user) {
-        // Redirect to homepage
-        res.redirect("/index.html");
-    } else {
-        res.send("<h2>Invalid username or password. <a href='/login.html'>Try again</a></h2>");
-    }
+  if (user) {
+    res.redirect("/index.html");
+  } else {
+    res.send("<h2>Invalid username or password. <a href='/login.html'>Try again</a></h2>");
+  }
 });
+
 
 // Book Appointment Route
 app.post("/book", async (req, res) => {
