@@ -7,13 +7,8 @@ const fs = require('fs');
 
 const app = express();
 
-// ✅ Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/healthconnect', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB Connected'))
-.catch((err) => console.error('❌ MongoDB connection error:', err));
+// ✅ Use improved MongoDB connection from db.js
+require('./db');
 
 // ✅ Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
