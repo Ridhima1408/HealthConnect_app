@@ -1,39 +1,33 @@
 // db.js
 const mongoose = require("mongoose");
+require("dotenv").config(); // Load environment variables
 
-// MongoDB connection with better timeout settings
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb://127.0.0.1:27017/healthconnect", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds
-      socketTimeoutMS: 45000, // 45 seconds
-      bufferMaxEntries: 0, // Disable mongoose buffering
-      maxPoolSize: 10, // Maintain up to 10 socket connections
-      serverSelectionRetryDelayMS: 5000, // Retry every 5 seconds
-      heartbeatFrequencyMS: 10000 // Send a ping every 10 seconds
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      maxPoolSize: 10,                 // Maintain up to 10 socket connections
+      serverSelectionTimeoutMS: 30000, // Timeout after 30s if server not found
+      socketTimeoutMS: 45000,          // Close sockets after 45s of inactivity
+      serverSelectionRetryDelayMS: 5000, // Retry every 5s if connection fails
+      heartbeatFrequencyMS: 10000,     // Ping MongoDB every 10s
     });
-    
+
     console.log("✅ MongoDB connected successfully");
     console.log(`📍 Connected to: ${conn.connection.host}:${conn.connection.port}`);
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
-    console.error("🔍 Check if MongoDB is running on your server with: sudo systemctl status mongod");
+    console.error("🔍 Check if MongoDB is running: sudo systemctl status mongod");
     process.exit(1);
   }
 };
 
-// Handle connection errors after initial connection
-mongoose.connection.on('error', err => {
-  console.error('❌ MongoDB connection error:', err);
+// Handle runtime events
+mongoose.connection.on("error", (err) => {
+  console.error("❌ MongoDB runtime error:", err);
 });
 
-mongoose.connection.on('disconnected', () => {
-  console.log('⚠️ MongoDB disconnected');
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠️ MongoDB disconnected");
 });
 
-connectDB();
-
-module.exports = mongoose;
-    
+module.exports = connectDB;
