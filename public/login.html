@@ -1,50 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Login | HealthConnect+</title>
-<link rel="stylesheet" href="login.css" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <title>Login | HealthConnect+</title>
+  <link rel="stylesheet" href="login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar">
-<div class="nav-container">
-<h1 class="logo">HealthConnect+</h1>
-<div class="nav-links">
-<a href="index.html">Home</a>
-<a href="book.html">Book Appointment</a>
-<a href="doctors.html">Doctors</a>
-<a href="about.html">About us</a>
-<a href="contact.html">Contact</a>
-<a href="login.html">login</a>
-</div>
-</div>
-</nav>
- 
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">HealthConnect+</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="book.html">Book Appointment</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" class="active">Login</a>
+      </div>
+    </div>
+  </nav>
+
   <!-- Login Form -->
-<main class="login-section">
-<h2>Login to Your Account</h2>
-<form action="/login" method="POST" class="login-form" autocomplete="off">
-<label for="username">Username</label>
-<input type="text" id="username" name="username" placeholder="Enter your username" required />
- 
+  <main class="login-section container">
+    <h2>Login to Your Account</h2>
+    <form action="/login" method="POST" class="login-form" autocomplete="off">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required />
+
       <label for="password">Password</label>
-<input type="password" id="password" name="password" placeholder="Enter your password" required />
- 
+      <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
       <button type="submit">Login</button>
-<p class="signup-text">
+      <p class="signup-text">
         Don't have an account? 
-<a href="register.html">Sign up</a>
-</p>
-</form>
-</main>
+        <a href="register.html">Sign up</a>
+      </p>
+    </form>
+  </main>
 
-
- 
   <!-- Footer -->
-<footer>
-<p>&copy; 2025 HealthConnect+. All rights reserved.</p>
-</footer>
+  <footer>
+    <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
+  </footer>
 </body>
 </html>

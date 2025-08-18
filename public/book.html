@@ -28,7 +28,7 @@
       <h2>Book an Appointment</h2>
       <p>Please fill in your details, select your doctor, and choose a convenient date for your appointment.</p>
 
-      <form class="appointment-form" action="/book" method="POST">
+      <form class="appointment-form" id="appointmentForm">
         <label for="name">Full Name:</label>
         <input type="text" id="name" name="name" placeholder="Your full name" required>
 
@@ -50,6 +50,8 @@
 
         <button type="submit">Book Now</button>
       </form>
+
+      <p id="responseMsg"></p>
     </section>
   </main>
 
@@ -57,5 +59,40 @@
   <footer>
     <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
   </footer>
+
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const date = document.getElementById("date").value;
+      const doctor = document.getElementById("doctor").value;
+
+      // Get token from localStorage (after login you should save it there)
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        document.getElementById("responseMsg").innerText = "⚠️ Please login first!";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://15.207.55.129/:3000/api/appointments/book", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+          },
+          body: JSON.stringify({ name, email, date, doctor })
+        });
+
+        const data = await res.text();
+        document.getElementById("responseMsg").innerText = res.ok ? "✅ Appointment booked successfully!" : `❌ Error: ${data}`;
+      } catch (err) {
+        document.getElementById("responseMsg").innerText = "❌ Server error: " + err.message;
+      }
+    });
+  </script>
 </body>
 </html>
