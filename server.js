@@ -1,24 +1,21 @@
-// server.js (Node + Express Backend)
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// ✅ Use improved MongoDB connection from db.js
+// ✅ MongoDB connection
 require('./db');
 
 // ✅ Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public"))); // Serve public folder
-
-// ✅ Path to JSON file (legacy support)
-const usersFile = path.join(__dirname, "users.json");
+app.use(express.static(path.join(__dirname, "public")));
 
 // -------------------- SCHEMAS -------------------- //
-// User Schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email:    { type: String, required: true, unique: true },
@@ -26,7 +23,6 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Appointment Schema
 const appointmentSchema = new mongoose.Schema({
   name:   { type: String, required: true },
   email:  { type: String, required: true },
@@ -46,24 +42,14 @@ app.post("/register", async (req, res) => {
       return res.send("<h2>Passwords do not match. Please go back and try again.</h2>");
     }
 
-    // Check if user exists
     const exists = await User.findOne({ $or: [{ username }, { email }] });
     if (exists) {
-      return res.send("<h2>User already exists. Please choose another username/email.</h2>");
+      return res.send("<h2>User already exists.</h2>");
     }
 
-    // Save user in MongoDB
-    const newUser = new User({ username, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-
-    // (Optional) Save to users.json
-    let users = [];
-    if (fs.existsSync(usersFile)) {
-      const data = fs.readFileSync(usersFile, "utf-8");
-      if (data) users = JSON.parse(data);
-    }
-    users.push({ username, email, password });
-    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
 
     res.redirect("/login.html");
   } catch (err) {
@@ -77,9 +63,8 @@ app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Find user
-    const user = await User.findOne({ username, password });
-    if (user) {
+    const user = await User.findOne({ username });
+    if (user && await bcrypt.compare(password, user.password)) {
       res.redirect("/index.html");
     } else {
       res.send("<h2>Invalid username or password. <a href='/login.html'>Try again</a></h2>");
@@ -90,7 +75,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Book Appointment Route
+// Book Appointment
 app.post("/book", async (req, res) => {
   try {
     const { name, email, date, doctor } = req.body;
@@ -115,7 +100,7 @@ app.get('/test', (req, res) => {
   res.send('Express is connected!');
 });
 
-// START THE SERVER
+// Start Server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
 });
