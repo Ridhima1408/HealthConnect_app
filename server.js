@@ -196,8 +196,8 @@ app.get('/test', (req, res) => {
 // Start Server - AWS Deployment Ready
 const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, HOST, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
   console.log(`🌐 Server accessible at: http://13.233.255.20/:${PORT}`);
   console.log(`📋 API endpoints:`);
   console.log(`   - GET /api/user - Check user session`);
