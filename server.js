@@ -182,11 +182,15 @@ app.get('/test', (req, res) => {
   res.send('Express is connected!');
 });
 
-// Start Server
-// app.listen(PORT, '0.0.0.0', () => {
-//   console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
-// });
+// Start Server - AWS Deployment Ready
+const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, () => {
- console.log(`✅ Server running on http://localhost:${PORT}`);
- });
+app.listen(PORT, HOST, () => {
+  console.log(`✅ Server running on http://${HOST}:${PORT}`);
+  console.log(`🌐 Server accessible at: http://65.2.74.240:${PORT}`);
+  console.log(`📋 API endpoints:`);
+  console.log(`   - GET /api/user - Check user session`);
+  console.log(`   - POST /login - User login`);
+  console.log(`   - POST /logout - User logout`);
+  console.log(`   - GET /book - Book appointment`);
+});

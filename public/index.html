@@ -115,6 +115,9 @@
     <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
   </footer>
 
+  <!-- Configuration -->
+  <script src="/js/config.js"></script>
+  
   <!-- JS -->
   <script>
     // Symptom Checker
@@ -143,7 +146,8 @@
 
     async function checkUserSession() {
       try {
-        const response = await fetch('/api/user');
+        const apiURL = window.CONFIG ? CONFIG.getAPIURL('user') : '/api/user';
+        const response = await fetch(apiURL);
         const data = await response.json();
         
         const loginLink = document.getElementById('login-link');

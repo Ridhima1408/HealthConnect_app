@@ -1,7 +1,9 @@
 // Shared navbar functionality for session management
 async function checkUserSession() {
   try {
-    const response = await fetch('/api/user');
+    // Use config for API URL (supports both localhost and AWS)
+    const apiURL = window.CONFIG ? CONFIG.getAPIURL('user') : '/api/user';
+    const response = await fetch(apiURL);
     const data = await response.json();
     
     const loginLink = document.getElementById('login-link');
