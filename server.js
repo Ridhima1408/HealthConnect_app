@@ -109,7 +109,7 @@ app.get("/api/user", (req, res) => {
 });
 
 // Get all users
-app.get("/api/user", async (req, res) => {
+app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find().select("-password"); // exclude password
     res.json(users);
@@ -185,7 +185,7 @@ app.get("/book/:name/:email/:date/:doctor", async (req, res) => {
 
 // Default Route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Test Route
@@ -197,11 +197,11 @@ app.get('/test', (req, res) => {
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
-  console.log(`✅ Server running on http://${HOST}:${PORT}`);
-  console.log(`🌐 Server accessible at: http://65.2.74.240:${PORT}`);
-  console.log(`📋 API endpoints:`);
-  console.log(`   - GET /api/user - Check user session`);
-  console.log(`   - POST /login - User login`);
-  console.log(`   - POST /logout - User logout`);
-  console.log(`   - GET /book - Book appointment`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
+  // console.log(`🌐 Server accessible at: http://65.2.74.240:${PORT}`);
+  // console.log(`📋 API endpoints:`);
+  // console.log(`   - GET /api/user - Check user session`);
+  // console.log(`   - POST /login - User login`);
+  // console.log(`   - POST /logout - User logout`);
+  // console.log(`   - GET /book - Book appointment`);
 });
