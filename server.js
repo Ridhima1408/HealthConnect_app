@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
+const session = require('express-session');
 const fs = require('fs');
 
 const app = express();
@@ -16,7 +17,14 @@ mongoose.connect('mongodb://localhost:27017/healthconnect')
 require('./db');
 
 // ✅ Middleware
+app.use(session({
+  secret: 'healthconnect-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 } // 24 hours
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // -------------------- SCHEMAS -------------------- //
@@ -69,6 +77,12 @@ app.post("/login", async (req, res) => {
 
     const user = await User.findOne({ username });
     if (user && await bcrypt.compare(password, user.password)) {
+      // Store user session
+      req.session.user = {
+        id: user._id,
+        username: user.username,
+        email: user.email
+      };
       res.redirect("/index.html");
     } else {
       res.send("<h2>Invalid username or password. <a href='/login.html'>Try again</a></h2>");
@@ -79,15 +93,79 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Book Appointment
-app.post("/book", async (req, res) => {
+// Get user session info
+app.get("/api/user", (req, res) => {
+  if (req.session.user) {
+    res.json({ 
+      loggedIn: true, 
+      user: {
+        username: req.session.user.username,
+        email: req.session.user.email
+      }
+    });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+// Logout Route
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Could not log out");
+    }
+    res.redirect("/login.html");
+  });
+});
+
+// Book Appointment using query parameters (no request body)
+app.get("/book", async (req, res) => {
   try {
-    const { name, email, date, doctor } = req.body;
+    // Get data from query parameters instead of request body
+    const { name, email, date, doctor } = req.query;
+
+    // Validate required fields
+    if (!name || !email || !date || !doctor) {
+      return res.status(400).send("<h2>Bad Request: Missing required appointment details (name, email, date, doctor)</h2>");
+    }
 
     const newAppointment = new Appointment({ name, email, date, doctor });
     await newAppointment.save();
 
     res.send("<h2>Appointment booked successfully! <a href='/index.html'>Go Home</a></h2>");
+  } catch (err) {
+    console.error("Error booking appointment:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Alternative: Book Appointment using route parameters (no request body)
+app.get("/book/:name/:email/:date/:doctor", async (req, res) => {
+  try {
+    // Get data from URL path parameters instead of request body
+    const { name, email, date, doctor } = req.params;
+
+    // URL decode the parameters
+    const decodedName = decodeURIComponent(name);
+    const decodedEmail = decodeURIComponent(email);
+    const decodedDate = decodeURIComponent(date);
+    const decodedDoctor = decodeURIComponent(doctor);
+
+    const newAppointment = new Appointment({ 
+      name: decodedName, 
+      email: decodedEmail, 
+      date: decodedDate, 
+      doctor: decodedDoctor 
+    });
+    await newAppointment.save();
+
+    res.send(`<h2>Appointment booked successfully!</h2>
+             <p><strong>Name:</strong> ${decodedName}</p>
+             <p><strong>Email:</strong> ${decodedEmail}</p>
+             <p><strong>Date:</strong> ${decodedDate}</p>
+             <p><strong>Doctor:</strong> ${decodedDoctor}</p>
+             <a href='/index.html'>Go Home</a>`);
   } catch (err) {
     console.error("Error booking appointment:", err);
     res.status(500).send("Internal Server Error");
@@ -105,6 +183,10 @@ app.get('/test', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
-});
+// app.listen(PORT, '0.0.0.0', () => {
+//   console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
+// });
+
+app.listen(PORT, () => {
+ console.log(`✅ Server running on http://localhost:${PORT}`);
+ });

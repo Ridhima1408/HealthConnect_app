@@ -17,7 +17,15 @@
         <a href="doctors.html">Doctors</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
-        <a href="login.html">Login</a>
+        <div id="user-nav">
+          <a href="login.html" id="login-link">Login</a>
+          <div id="user-menu" style="display: none;">
+            <span id="username-display">Welcome, User!</span>
+            <form action="/logout" method="POST" style="display: inline;">
+              <button type="submit" id="logout-btn">Logout</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -64,5 +72,70 @@
   <footer>
     <p>&copy; 2025 HealthConnect+. All rights reserved.</p>
   </footer>
+
+  <!-- Session Management Script -->
+  <script>
+    // Check user session on page load
+    window.addEventListener('load', async function() {
+      await checkUserSession();
+    });
+
+    async function checkUserSession() {
+      try {
+        const response = await fetch('/api/user');
+        const data = await response.json();
+        
+        const loginLink = document.getElementById('login-link');
+        const userMenu = document.getElementById('user-menu');
+        const usernameDisplay = document.getElementById('username-display');
+        
+        if (data.loggedIn) {
+          loginLink.style.display = 'none';
+          userMenu.style.display = 'inline-flex';
+          usernameDisplay.textContent = `Welcome, ${data.user.username}!`;
+        } else {
+          loginLink.style.display = 'inline';
+          userMenu.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error checking user session:', error);
+      }
+    }
+  </script>
+
+  <!-- User Navigation Styles -->
+  <style>
+    #user-nav {
+      display: inline;
+    }
+    
+    #user-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    #username-display {
+      color: #0077cc;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    #logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    
+    #logout-btn:hover {
+      background: #c82333;
+    }
+  </style>
 </body>
 </html>
