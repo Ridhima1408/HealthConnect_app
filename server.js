@@ -108,6 +108,17 @@ app.get("/api/user", (req, res) => {
   }
 });
 
+// Get all users
+app.get("/api/user", async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // exclude password
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // Logout Route
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
