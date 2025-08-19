@@ -194,3 +194,7 @@ app.listen(PORT, HOST, () => {
   console.log(`   - POST /logout - User logout`);
   console.log(`   - GET /book - Book appointment`);
 });
+
+// app.listen(PORT, () => {
+//   console.log(`✅ Server running on http://localhost:${PORT}`);
+// });
