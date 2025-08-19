@@ -1,5 +1,5 @@
 // Environment configuration for HealthConnect+
-const CONFIG = {
+window.CONFIG = {
   // Detect if we're running in production (AWS) or development (localhost)
   isProduction: () => {
     return window.location.hostname !== 'localhost' && 
@@ -9,7 +9,7 @@ const CONFIG = {
   
   // Get the base API URL based on environment
   getAPIBaseURL: () => {
-    if (CONFIG.isProduction()) {
+    if (window.CONFIG.isProduction()) {
       // Production: Use the current host (AWS instance)
       return `${window.location.protocol}//${window.location.host}`;
     } else {
@@ -29,14 +29,14 @@ const CONFIG = {
   
   // Get full API URL
   getAPIURL: (endpoint) => {
-    return CONFIG.getAPIBaseURL() + CONFIG.endpoints[endpoint];
+    return window.CONFIG.getAPIBaseURL() + window.CONFIG.endpoints[endpoint];
   }
 };
 
 // Debug info (remove in production)
 console.log('🔧 HealthConnect+ Config:', {
-  environment: CONFIG.isProduction() ? 'Production' : 'Development',
+  environment: window.CONFIG.isProduction() ? 'Production' : 'Development',
   hostname: window.location.hostname,
-  baseURL: CONFIG.getAPIBaseURL(),
-  userAPI: CONFIG.getAPIURL('user')
+  baseURL: window.CONFIG.getAPIBaseURL(),
+  userAPI: window.CONFIG.getAPIURL('user')
 });

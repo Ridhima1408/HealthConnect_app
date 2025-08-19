@@ -1,8 +1,16 @@
 // Shared navbar functionality for session management
 async function checkUserSession() {
   try {
-    // Use config for API URL (supports both localhost and AWS)
-    const apiURL = window.CONFIG ? CONFIG.getAPIURL('user') : '/api/user';
+    // Safe way to get API URL with fallback
+    let apiURL = '/api/user';
+    if (window.CONFIG && typeof window.CONFIG.getAPIURL === 'function') {
+      try {
+        apiURL = window.CONFIG.getAPIURL('user');
+      } catch (configError) {
+        console.warn('Config error in navbar, using fallback API URL:', configError);
+      }
+    }
+    
     const response = await fetch(apiURL);
     const data = await response.json();
     

@@ -117,6 +117,7 @@
 
   <!-- Configuration -->
   <script src="/js/config.js"></script>
+  <script src="/js/simple-config.js"></script>
   
   <!-- JS -->
   <script>
@@ -146,7 +147,17 @@
 
     async function checkUserSession() {
       try {
-        const apiURL = window.CONFIG ? CONFIG.getAPIURL('user') : '/api/user';
+        // Safe way to get API URL with fallback
+        let apiURL = '/api/user';
+        if (window.CONFIG && typeof window.CONFIG.getAPIURL === 'function') {
+          try {
+            apiURL = window.CONFIG.getAPIURL('user');
+          } catch (configError) {
+            console.warn('Config error, using fallback API URL:', configError);
+          }
+        }
+        
+        console.log('Making API request to:', apiURL);
         const response = await fetch(apiURL);
         const data = await response.json();
         
