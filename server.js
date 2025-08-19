@@ -198,10 +198,10 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
-  // console.log(`🌐 Server accessible at: http://65.2.74.240:${PORT}`);
-  // console.log(`📋 API endpoints:`);
-  // console.log(`   - GET /api/user - Check user session`);
-  // console.log(`   - POST /login - User login`);
-  // console.log(`   - POST /logout - User logout`);
-  // console.log(`   - GET /book - Book appointment`);
+  console.log(`🌐 Server accessible at: http://13.233.255.20/:${PORT}`);
+  console.log(`📋 API endpoints:`);
+  console.log(`   - GET /api/user - Check user session`);
+  console.log(`   - POST /login - User login`);
+  console.log(`   - POST /logout - User logout`);
+  console.log(`   - GET /book - Book appointment`);
 });
