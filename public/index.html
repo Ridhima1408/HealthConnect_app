@@ -147,13 +147,30 @@
 
     async function checkUserSession() {
       try {
-        // Safe way to get API URL with fallback
+        // Bulletproof API URL detection
         let apiURL = '/api/user';
+        
+        // Method 1: Try CONFIG if available
         if (window.CONFIG && typeof window.CONFIG.getAPIURL === 'function') {
           try {
             apiURL = window.CONFIG.getAPIURL('user');
+            console.log('Using CONFIG API URL:', apiURL);
           } catch (configError) {
-            console.warn('Config error, using fallback API URL:', configError);
+            console.warn('CONFIG error:', configError);
+          }
+        }
+        
+        // Method 2: Fallback - Direct environment detection
+        if (apiURL === '/api/user') {
+          const isAWS = window.location.hostname !== 'localhost' && 
+                        window.location.hostname !== '127.0.0.1' && 
+                        window.location.hostname !== '';
+          
+          if (isAWS) {
+            apiURL = `${window.location.protocol}//${window.location.host}/api/user`;
+            console.log('Using direct AWS detection:', apiURL);
+          } else {
+            console.log('Using localhost fallback:', apiURL);
           }
         }
         
