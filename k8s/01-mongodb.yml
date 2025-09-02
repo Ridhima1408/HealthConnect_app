@@ -76,14 +76,18 @@ spec:
             cpu: "500m"
         livenessProbe:
           exec:
-            command: ["mongo", "--eval", "db.adminCommand('ping')"]
+            command: ["mongosh", "--eval", "db.adminCommand('ping')"]
           initialDelaySeconds: 30
           periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
         readinessProbe:
           exec:
-            command: ["mongo", "--eval", "db.adminCommand('ping')"]
+            command: ["mongosh", "--eval", "db.adminCommand('ping')"]
           initialDelaySeconds: 15
           periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
       volumes:
       - name: mongodb-data
         hostPath:
@@ -109,3 +113,4 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
+    protocol: TCP
