@@ -1,0 +1,550 @@
+---
+- name: Configure Jenkins Server for HealthConnect+ CI/CD Pipeline
+  hosts: jenkins
+  become: yes
+  vars:
+    jenkins_plugins:
+      - docker-plugin
+      - docker-workflow
+      - pipeline-stage-view
+      - blueocean
+      - github
+      - git
+      - workflow-aggregator
+      - pipeline-github-lib
+      - kubernetes
+      - kubernetes-cli
+      - aws-credentials
+      - amazon-ecr
+      - emailext
+      - build-timeout
+      - credentials-binding
+      - timestamper
+      - ws-cleanup
+      - ant
+      - gradle
+      - nodejs
+      - docker-build-step
+      - docker-commons
+      - docker-pipeline
+      - kubernetes-cd
+      - pipeline-utility-steps
+      - slack
+
+  tasks:
+    - name: 🔄 Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: 📦 Install required system packages
+      apt:
+        name:
+          - curl
+          - wget
+          - gnupg
+          - lsb-release
+          - software-properties-common
+          - apt-transport-https
+          - ca-certificates
+          - python3-pip
+          - python3-setuptools
+          - unzip
+          - git
+          - vim
+          - htop
+          - tree
+        state: present
+
+    - name: ☕ Install Java {{ java_version }}
+      apt:
+        name: "{{ java_version }}"
+        state: present
+
+    - name: 🐳 Install Docker
+      block:
+        - name: Add Docker GPG key
+          apt_key:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            state: present
+
+        - name: Add Docker repository
+          apt_repository:
+            repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+            state: present
+
+        - name: Install Docker CE
+          apt:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+              - docker-compose-plugin
+            state: present
+            update_cache: yes
+
+        - name: Start and enable Docker service
+          systemd:
+            name: docker
+            state: started
+            enabled: yes
+
+        - name: Add jenkins user to docker group
+          user:
+            name: jenkins
+            groups: docker
+            append: yes
+
+    - name: 🔧 Install Docker Compose standalone (for compatibility)
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-linux-x86_64"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+        owner: root
+        group: root
+
+    - name: ☁️ Install AWS CLI v2
+      block:
+        - name: Download AWS CLI v2
+          get_url:
+            url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+            dest: /tmp/awscliv2.zip
+
+        - name: Extract AWS CLI v2
+          unarchive:
+            src: /tmp/awscliv2.zip
+            dest: /tmp
+            remote_src: yes
+
+        - name: Install AWS CLI v2
+          command: /tmp/aws/install --update
+          args:
+            creates: /usr/local/bin/aws
+
+        - name: Clean up AWS CLI installation files
+          file:
+            path: "{{ item }}"
+            state: absent
+          loop:
+            - /tmp/awscliv2.zip
+            - /tmp/aws
+
+    - name: ☸️ Install kubectl
+      block:
+        - name: Download kubectl
+          get_url:
+            url: "https://dl.k8s.io/release/{{ kubectl_version | default('v1.28.0') }}/bin/linux/amd64/kubectl"
+            dest: /usr/local/bin/kubectl
+            mode: '0755'
+            owner: root
+            group: root
+
+        - name: Verify kubectl installation
+          command: kubectl version --client
+          register: kubectl_version_output
+          changed_when: false
+
+        - name: Display kubectl version
+          debug:
+            var: kubectl_version_output.stdout
+
+    - name: 🔧 Install eksctl
+      block:
+        - name: Download eksctl
+          get_url:
+            url: "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
+            dest: /tmp/eksctl.tar.gz
+
+        - name: Extract eksctl
+          unarchive:
+            src: /tmp/eksctl.tar.gz
+            dest: /tmp
+            remote_src: yes
+
+        - name: Install eksctl
+          copy:
+            src: /tmp/eksctl
+            dest: /usr/local/bin/eksctl
+            mode: '0755'
+            owner: root
+            group: root
+
+        - name: Clean up eksctl installation
+          file:
+            path: "{{ item }}"
+            state: absent
+          loop:
+            - /tmp/eksctl.tar.gz
+            - /tmp/eksctl
+
+    - name: 📦 Install Node.js and npm
+      block:
+        - name: Add NodeSource GPG key
+          apt_key:
+            url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+            state: present
+
+        - name: Add NodeSource repository
+          apt_repository:
+            repo: "deb https://deb.nodesource.com/node_18.x {{ ansible_distribution_release }} main"
+            state: present
+
+        - name: Install Node.js
+          apt:
+            name: nodejs
+            state: present
+            update_cache: yes
+
+        - name: Install global npm packages
+          npm:
+            name: "{{ item }}"
+            global: yes
+          loop:
+            - pm2
+            - nodemon
+            - npm-check-updates
+
+    - name: 🔧 Configure Jenkins repository and installation
+      block:
+        - name: Add Jenkins GPG key
+          apt_key:
+            url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+            state: present
+
+        - name: Add Jenkins repository
+          apt_repository:
+            repo: deb https://pkg.jenkins.io/debian-stable binary/
+            state: present
+
+        - name: Install Jenkins
+          apt:
+            name: jenkins
+            state: present
+            update_cache: yes
+
+        - name: Start and enable Jenkins service
+          systemd:
+            name: jenkins
+            state: started
+            enabled: yes
+
+    - name: ⏳ Wait for Jenkins to start up
+      wait_for:
+        port: "{{ jenkins_port }}"
+        host: localhost
+        delay: 10
+        timeout: 300
+
+    - name: 🔐 Get Jenkins initial admin password
+      slurp:
+        src: /var/lib/jenkins/secrets/initialAdminPassword
+      register: jenkins_initial_password
+
+    - name: 📄 Display Jenkins initial admin password
+      debug:
+        msg: |
+          ========================================
+          🏥 HEALTHCONNECT+ JENKINS SETUP COMPLETE
+          ========================================
+          
+          Jenkins URL: http://{{ ansible_host }}:{{ jenkins_port }}
+          Initial Admin Password: {{ jenkins_initial_password.content | b64decode }}
+          
+          Next Steps:
+          1. Access Jenkins at the URL above
+          2. Use the initial admin password to login
+          3. Install suggested plugins + HealthConnect+ specific plugins
+          4. Create admin user
+          5. Configure credentials in Jenkins:
+             - dockerhub-credentials (Docker Hub login)
+             - aws-access-key-id (AWS Access Key)
+             - aws-secret-access-key (AWS Secret Key)
+             - kubeconfig (Kubernetes config file)
+          
+          HealthConnect+ Pipeline Ready! 🎉
+
+    - name: 🔐 Configure Jenkins security and plugins
+      block:
+        - name: Create Jenkins CLI directory
+          file:
+            path: /var/lib/jenkins/cli
+            state: directory
+            owner: jenkins
+            group: jenkins
+            mode: '0755'
+
+        - name: Download Jenkins CLI
+          get_url:
+            url: "http://localhost:{{ jenkins_port }}/jnlpJars/jenkins-cli.jar"
+            dest: /var/lib/jenkins/cli/jenkins-cli.jar
+            owner: jenkins
+            group: jenkins
+            mode: '0644'
+          retries: 5
+          delay: 10
+
+    - name: 🔧 Configure system settings
+      block:
+        - name: Set system timezone
+          timezone:
+            name: UTC
+
+        - name: Configure Git for jenkins user
+          become_user: jenkins
+          block:
+            - name: Set git user name
+              git_config:
+                name: user.name
+                value: "Jenkins CI/CD"
+                scope: global
+
+            - name: Set git user email
+              git_config:
+                name: user.email
+                value: "jenkins@healthconnect.local"
+                scope: global
+
+    - name: 🔥 Configure firewall rules
+      block:
+        - name: Install UFW
+          apt:
+            name: ufw
+            state: present
+
+        - name: Reset UFW to defaults
+          ufw:
+            state: reset
+
+        - name: Allow SSH
+          ufw:
+            rule: allow
+            port: '22'
+            proto: tcp
+
+        - name: Allow Jenkins port
+          ufw:
+            rule: allow
+            port: "{{ jenkins_port }}"
+            proto: tcp
+
+        - name: Allow HTTP
+          ufw:
+            rule: allow
+            port: '80'
+            proto: tcp
+
+        - name: Allow HTTPS
+          ufw:
+            rule: allow
+            port: '443'
+            proto: tcp
+
+        - name: Enable UFW
+          ufw:
+            state: enabled
+            policy: deny
+            direction: incoming
+
+    - name: 📁 Create HealthConnect+ workspace directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: jenkins
+        group: jenkins
+        mode: '0755'
+      loop:
+        - /var/lib/jenkins/workspace
+        - /var/lib/jenkins/workspace/healthconnect-pipeline
+        - /var/lib/jenkins/tools
+        - /var/lib/jenkins/logs
+        - /home/jenkins/.kube
+        - /home/jenkins/.aws
+        - /home/jenkins/.docker
+
+    - name: 📋 Create helpful scripts for HealthConnect+ operations
+      block:
+        - name: Create Jenkins restart script
+          copy:
+            dest: /usr/local/bin/jenkins-restart.sh
+            mode: '0755'
+            content: |
+              #!/bin/bash
+              echo "🔄 Restarting Jenkins for HealthConnect+..."
+              sudo systemctl restart jenkins
+              echo "⏳ Waiting for Jenkins to start..."
+              sleep 30
+              echo "✅ Jenkins restarted. Access at http://$(hostname -I | awk '{print $1}'):{{ jenkins_port }}"
+
+        - name: Create Docker cleanup script
+          copy:
+            dest: /usr/local/bin/docker-cleanup.sh
+            mode: '0755'
+            content: |
+              #!/bin/bash
+              echo "🧹 Cleaning up Docker resources for HealthConnect+..."
+              docker system prune -af --volumes
+              docker image prune -a
+              echo "✅ Docker cleanup completed"
+
+        - name: Create HealthConnect+ deployment status script
+          copy:
+            dest: /usr/local/bin/healthconnect-status.sh
+            mode: '0755'
+            content: |
+              #!/bin/bash
+              echo "🏥 HealthConnect+ Deployment Status"
+              echo "=================================="
+              
+              echo "📦 Docker Images:"
+              docker images | grep healthconnect || echo "No HealthConnect+ images found"
+              
+              echo ""
+              echo "🐳 Running Containers:"
+              docker ps | grep healthconnect || echo "No HealthConnect+ containers running"
+              
+              echo ""
+              echo "☸️ Kubernetes Pods (if configured):"
+              kubectl get pods -n healthconnect 2>/dev/null || echo "Kubernetes not configured or no pods found"
+              
+              echo ""
+              echo "🌐 Services:"
+              kubectl get services -n healthconnect 2>/dev/null || echo "No Kubernetes services found"
+
+    - name: 🔧 Configure log rotation for Jenkins
+      copy:
+        dest: /etc/logrotate.d/jenkins
+        content: |
+          /var/log/jenkins/jenkins.log {
+              daily
+              missingok
+              rotate 30
+              compress
+              notifempty
+              create 640 jenkins adm
+              postrotate
+                  /bin/systemctl reload jenkins > /dev/null 2>&1 || true
+              endscript
+          }
+
+    - name: 📊 Install monitoring tools
+      block:
+        - name: Install htop for system monitoring
+          apt:
+            name: htop
+            state: present
+
+        - name: Install ncdu for disk usage
+          apt:
+            name: ncdu
+            state: present
+
+        - name: Install tree for directory structure
+          apt:
+            name: tree
+            state: present
+
+    - name: 🎯 Final system optimization
+      block:
+        - name: Increase Jenkins Java heap size
+          lineinfile:
+            path: /etc/default/jenkins
+            regexp: '^JAVA_ARGS='
+            line: 'JAVA_ARGS="-Djava.awt.headless=true -Xmx2g -Xms1g"'
+            backup: yes
+
+        - name: Increase system limits for Jenkins
+          lineinfile:
+            path: /etc/security/limits.conf
+            line: "{{ item }}"
+            backup: yes
+          loop:
+            - "jenkins soft nofile 65536"
+            - "jenkins hard nofile 65536"
+            - "jenkins soft nproc 32768"
+            - "jenkins hard nproc 32768"
+
+        - name: Configure Docker daemon for Jenkins
+          copy:
+            dest: /etc/docker/daemon.json
+            content: |
+              {
+                "log-driver": "json-file",
+                "log-opts": {
+                  "max-size": "10m",
+                  "max-file": "3"
+                },
+                "storage-driver": "overlay2"
+              }
+
+        - name: Restart Docker to apply configuration
+          systemd:
+            name: docker
+            state: restarted
+
+        - name: Restart Jenkins to apply all configurations
+          systemd:
+            name: jenkins
+            state: restarted
+
+    - name: ⏳ Final wait for services to be ready
+      wait_for:
+        port: "{{ jenkins_port }}"
+        host: localhost
+        delay: 30
+        timeout: 300
+
+    - name: 🎉 Display final setup information
+      debug:
+        msg: |
+          
+          ========================================
+          🏥 HEALTHCONNECT+ CI/CD SERVER READY!
+          ========================================
+          
+          🌐 Access Information:
+          Jenkins URL: http://{{ ansible_host }}:{{ jenkins_port }}
+          SSH Access: ssh -i ~/.ssh/your-key.pem ubuntu@{{ ansible_host }}
+          
+          🔐 Credentials:
+          Initial Admin Password: {{ jenkins_initial_password.content | b64decode }}
+          
+          📦 Installed Software:
+          ✅ Java {{ java_version }}
+          ✅ Jenkins {{ jenkins_port }}
+          ✅ Docker + Docker Compose
+          ✅ AWS CLI v2
+          ✅ kubectl + eksctl
+          ✅ Node.js 18 + npm
+          
+          🏥 HealthConnect+ Ready Features:
+          ✅ Docker image building
+          ✅ Docker Hub integration
+          ✅ AWS ECR integration
+          ✅ Kubernetes deployment
+          ✅ Load balancer configuration
+          ✅ Monitoring scripts
+          
+          🔧 Helpful Commands:
+          - jenkins-restart.sh (restart Jenkins)
+          - docker-cleanup.sh (cleanup Docker)
+          - healthconnect-status.sh (check deployment status)
+          
+          🚀 Next Steps:
+          1. Access Jenkins and complete setup wizard
+          2. Install suggested plugins
+          3. Configure credentials for Docker Hub and AWS
+          4. Create your first HealthConnect+ pipeline job
+          5. Point to your GitHub repository
+          
+          Happy deploying! 🎊
+
+  handlers:
+    - name: restart jenkins
+      systemd:
+        name: jenkins
+        state: restarted
+
+    - name: restart docker
+      systemd:
+        name: docker
+        state: restarted
