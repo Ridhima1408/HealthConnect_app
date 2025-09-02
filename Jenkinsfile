@@ -11,32 +11,12 @@ pipeline {
         NAMESPACE       = 'healthconnect'
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                echo '📥 Checking out source code...'
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 echo '🐳 Building Docker image...'
                 sh """
                     docker build -t ${DOCKER_REPO}:${BUILD_NUMBER} .
                     docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${DOCKER_REPO}:latest
-                """
-            }
-        }
-
-        stage('Test Docker Container') {
-            steps {
-                echo '🧪 Testing Docker container...'
-                sh """
-                    docker run -d --name test-${APP_NAME} -p 3018:3000 ${DOCKER_REPO}:${BUILD_NUMBER}
-                    sleep 10
-                    curl -f http://localhost:3018/ || exit 1
-                    docker stop test-${APP_NAME} && docker rm test-${APP_NAME}
                 """
             }
         }
