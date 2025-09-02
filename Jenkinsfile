@@ -35,16 +35,24 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Push to AWS ECR') {
                     steps {
-                        sh """
-                            aws ecr get-login-password --region ${AWS_REGION} | \
-                            docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                            docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
-                            docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:latest
-                            docker push ${ECR_REPO}:${BUILD_NUMBER}
-                            docker push ${ECR_REPO}:latest
-                        """
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            credentialsId: 'aws-credentials'
+                        ]]) {
+                            sh """
+                                aws ecr get-login-password --region ${AWS_REGION} | \
+                                docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+                                
+                                docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
+                                docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:latest
+                                
+                                docker push ${ECR_REPO}:${BUILD_NUMBER}
+                                docker push ${ECR_REPO}:latest
+                            """
+                        }
                     }
                 }
             }
