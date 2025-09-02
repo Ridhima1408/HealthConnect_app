@@ -1,14 +1,15 @@
 {
-  "name": "ridhima",
+  "name": "healthconnect-plus",
   "version": "1.0.0",
+  "description": "HealthConnect+ - Digital Healthcare Platform with Online Consultations and Appointment Booking",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["healthcare", "appointments", "consultation", "medical"],
+  "author": "HealthConnect Team",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
@@ -20,9 +21,9 @@
     "mongoose": "^8.17.2",
     "morgan": "^1.10.1",
     "mysql2": "^3.14.3",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "twilio": "^5.8.2"
   },
-  "description": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ridhima1408/HealthConnect_app.git"

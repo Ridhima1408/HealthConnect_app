@@ -8,7 +8,6 @@ const connectDB = async () => {
       maxPoolSize: 10,                 // Maintain up to 10 socket connections
       serverSelectionTimeoutMS: 30000, // Timeout after 30s if server not found
       socketTimeoutMS: 45000,          // Close sockets after 45s of inactivity
-      serverSelectionRetryDelayMS: 5000, // Retry every 5s if connection fails
       heartbeatFrequencyMS: 10000,     // Ping MongoDB every 10s
     });
 
@@ -17,7 +16,8 @@ const connectDB = async () => {
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
     console.error("🔍 Check if MongoDB is running: sudo systemctl status mongod");
-    process.exit(1);
+    console.warn("⚠️ Continuing without MongoDB - some features will be limited");
+    // Don't exit - let the app run without database for demo
   }
 };
 

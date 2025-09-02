@@ -3,20 +3,923 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HealthConnect+ | Home</title>
-  <link rel="stylesheet" href="/style.css" />
-    <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/08/20/03/20250820033102-AZO5AC7T.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <title>HealthConnect+ | Your Premier Healthcare Partner</title>
+  <link rel="stylesheet" href="/global.css" />
+  <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2025/08/20/03/20250820033102-AZO5AC7T.js" defer></script>
+  <script src="/js/navbar.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    /* Enhanced Home Page Styling */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(10, 61, 98, 0.8), rgba(56, 173, 169, 0.7)), url('/hospital.webp') center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding-top: 80px; /* Add padding to account for fixed navbar */
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      padding: 2rem;
+      z-index: 2;
+    }
+    
+    .hero h1,
+    .hero .main-heading,
+    .hero .main-heading *,
+    .hero .gradient-text,
+    .hero .brand-highlight {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white !important;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.9) !important;
+      line-height: 1.2;
+      display: inline !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      -webkit-text-fill-color: white !important;
+      background: none !important;
+      white-space: nowrap;
+    }
+    
+    .hero .tagline,
+    .hero .main-tagline,
+    .hero .sub-tagline,
+    .hero .tagline-container *,
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.95) !important;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.8) !important;
+      font-weight: 400;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .hero-stats .stat-item {
+      text-align: center;
+      color: white !important;
+    }
+    
+    .hero-stats .stat-item * {
+      color: white !important;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8) !important;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .hero-btn.primary {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: white;
+    }
+    
+    .hero-btn.secondary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    .hero-btn.primary:hover {
+      background: linear-gradient(135deg, #0a3d62, #38ada9);
+    }
+    
+    .hero-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    /* Features Section */
+    .features-section {
+      padding: 80px 0;
+      background: #f8f9ff;
+    }
+    
+    .features-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .features-header h2 {
+      font-size: 2.5rem;
+      color: #0a3d62;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .features-header p {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border-top: 4px solid #38ada9;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      color: #38ada9;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.4rem;
+      color: #0a3d62;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .feature-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 173, 169, 0.4);
+    }
+    
+    /* Stats Section */
+    .stats-section {
+      padding: 60px 0;
+      background: #0a3d62;
+      color: white;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #38ada9;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 400;
+    }
+    
+    /* Symptom Checker */
+    .symptom-checker {
+      padding: 60px 0;
+      background: white;
+    }
+    
+    .symptom-checker .container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 2rem;
+    }
+    
+    .symptom-checker h3 {
+      font-size: 2rem;
+      color: #0a3d62;
+      margin-bottom: 1rem;
+    }
+    
+    .symptom-checker p {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .symptom-input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    #symptomInput {
+      flex: 1;
+      min-width: 300px;
+      padding: 15px 20px;
+      border: 2px solid #e9ecef;
+      border-radius: 50px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    #symptomInput:focus {
+      border-color: #38ada9;
+      box-shadow: 0 0 0 4px rgba(56, 173, 169, 0.1);
+    }
+    
+    .symptom-btn {
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .symptom-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 173, 169, 0.4);
+    }
+    
+    #symptomResult {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f9ff;
+      border-radius: 10px;
+      border-left: 4px solid #38ada9;
+      display: none;
+    }
+    
+    #symptomResult.show {
+      display: block;
+    }
+    
+    /* Medical Reports Section */
+    .medical-reports {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .reports-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .reports-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .reports-header i {
+      font-size: 3.5rem;
+      color: #38ada9;
+      margin-bottom: 20px;
+    }
+    
+    .reports-header h3 {
+      font-size: 2.5rem;
+      color: #0a3d62;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .reports-header p {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .reports-form {
+      background: #f8f9ff;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .reports-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+    }
+    
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .reports-btn {
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 auto;
+      box-shadow: 0 4px 15px rgba(56, 173, 169, 0.3);
+    }
+    
+    .reports-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(56, 173, 169, 0.4);
+    }
+    
+    .reports-display {
+      margin-top: 40px;
+    }
+    
+    .reports-list-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 25px;
+      background: #f8f9ff;
+      border-radius: 15px;
+      border: 2px solid #e6f3ff;
+    }
+    
+    .reports-list-header h4 {
+      font-size: 1.6rem;
+      color: #0a3d62;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .reports-list-header p {
+      color: #666;
+      font-size: 1rem;
+      margin: 0;
+    }
+    
+    .reports-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+    }
+    
+    .report-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      border-left: 4px solid #38ada9;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .report-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .report-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .report-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .report-icon i {
+      font-size: 1.2rem;
+      color: white;
+    }
+    
+    .report-info h5 {
+      font-size: 1.3rem;
+      color: #0a3d62;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .report-date,
+    .report-type {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 2px 0;
+    }
+    
+    .report-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    
+    .btn {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #6c757d;
+      border: 1px solid #dee2e6;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 5px 15px rgba(56, 173, 169, 0.4);
+    }
+    
+    .btn-secondary:hover {
+      background: #e9ecef;
+      border-color: #adb5bd;
+    }
+    
+    .no-reports {
+      text-align: center;
+      padding: 60px 20px;
+      background: #f8f9ff;
+      border-radius: 15px;
+      border: 2px dashed #dee2e6;
+    }
+    
+    .no-reports i {
+      font-size: 3rem;
+      color: #38ada9;
+      margin-bottom: 20px;
+    }
+    
+    .no-reports h4 {
+      font-size: 1.4rem;
+      color: #0a3d62;
+      margin-bottom: 10px;
+    }
+    
+    .no-reports p {
+      color: #666;
+      font-size: 1rem;
+    }
+    
+    /* Blog Section */
+    .blog-section {
+      padding: 80px 0;
+      background: #f8f9ff;
+    }
+    
+    .blog-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .blog-header h3 {
+      font-size: 2.5rem;
+      color: #0a3d62;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .blog-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .blog-form-container {
+      max-width: 800px;
+      margin: 0 auto 60px auto;
+      padding: 0 2rem;
+    }
+    
+    .blog-form {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .blog-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+    }
+    
+    .blog-form .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .blog-form .form-header i {
+      font-size: 3rem;
+      color: #38ada9;
+      margin-bottom: 15px;
+    }
+    
+    .blog-form .form-header h4 {
+      font-size: 1.8rem;
+      color: #0a3d62;
+      margin-bottom: 10px;
+    }
+    
+    .blog-form .form-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+    
+    .form-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    .input-group {
+      position: relative;
+    }
+    
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #38ada9;
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+    
+    .textarea-group i {
+      top: 20px;
+      transform: none;
+    }
+    
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      padding: 15px 15px 15px 50px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+    
+    .input-group input:focus,
+    .input-group textarea:focus {
+      outline: none;
+      border-color: #38ada9;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(56, 173, 169, 0.1);
+    }
+    
+    .input-group textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+    
+    .blog-submit-btn {
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      align-self: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(56, 173, 169, 0.3);
+    }
+    
+    .blog-submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(56, 173, 169, 0.4);
+    }
+    
+    .blog-list-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .blog-list-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .blog-list-header i {
+      font-size: 2.5rem;
+      color: #38ada9;
+      margin-bottom: 15px;
+    }
+    
+    .blog-list-header h4 {
+      font-size: 1.6rem;
+      color: #0a3d62;
+      margin-bottom: 8px;
+    }
+    
+    .blog-list-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+    
+    .blogs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .blog-post {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid #38ada9;
+    }
+    
+    .blog-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .blog-post .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #0a3d62;
+      font-size: 1.1rem;
+    }
+    
+    .blog-post .author::before {
+      content: '\f007';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: #38ada9;
+      font-size: 1rem;
+    }
+    
+    .blog-post .date {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .blog-post .date::before {
+      content: '\f017';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: #38ada9;
+      font-size: 0.8rem;
+    }
+    
+    .blog-post .content {
+      line-height: 1.6;
+      color: #333;
+      font-size: 1rem;
+      text-align: justify;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1,
+      .hero .main-heading,
+      .hero .main-heading * {
+        font-size: 2.5rem;
+      }
+      
+      .hero .tagline,
+      .hero .main-tagline,
+      .hero .sub-tagline {
+        font-size: 1.1rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero-stats {
+        gap: 1rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        padding: 0 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+      
+      .symptom-input-group {
+        flex-direction: column;
+      }
+      
+      #symptomInput {
+        min-width: auto;
+      }
+      
+      .blog-form-container,
+      .blog-list-container {
+        padding: 0 1rem;
+      }
+      
+      .blog-form {
+        padding: 30px 20px;
+      }
+      
+      .blogs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero h1,
+      .hero .main-heading,
+      .hero .main-heading * {
+        font-size: 2rem;
+      }
+      
+      .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+      }
+      
+      .features-header h2,
+      .blog-header h3 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    <div class="emergency-text">
+      🚨 FOR EMERGENCY OR AMBULANCE SERVICES CALL 108 • URGENT CARE AVAILABLE 24/7 • CALL +91 8945567890 🚨
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="container nav-container">
       <h1 class="logo">HealthConnect+</h1>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
+      
+      <!-- Mobile Menu Toggle -->
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">Home</a>
         <a href="book.html">Book Appointment</a>
+        <a href="consultation.html">Online Consultation</a>
         <a href="doctors.html">Doctors</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
@@ -37,80 +940,242 @@
   <header class="hero">
     <div class="hero-overlay">
       <div class="hero-content">
-        <h2>Welcome to HealthConnect+</h2>
-        <p>Your trusted partner in health and wellness</p>
-        <a href="book.html" class="hero-btn">Book an Appointment</a>
+        <div class="hero-welcome">
+          <span class="welcome-emoji">🏥</span>
+          <h1 class="main-heading">
+            <span class="gradient-text">Welcome to</span>
+            <span class="brand-highlight">HealthConnect+</span>
+          </h1>
+          <div class="tagline-container">
+            <p class="main-tagline">Your Premier Digital Healthcare Partner</p>
+            <p class="sub-tagline">Connecting you to quality healthcare with cutting-edge technology</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <i class="fas fa-users"></i>
+              <span class="stat-number">50K+</span>
+              <span class="stat-label">Happy Patients</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-user-md"></i>
+              <span class="stat-number">200+</span>
+              <span class="stat-label">Expert Doctors</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-clock"></i>
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Available</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-buttons">
+          <a href="book.html" class="hero-btn primary">
+            <i class="fas fa-calendar-plus"></i>
+            Book Appointment
+          </a>
+          <a href="consultation.html" class="hero-btn secondary">
+            <i class="fas fa-video"></i>
+            Online Consultation
+          </a>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Why Choose Us Section -->
+  <!-- Features Section -->
   <main class="content container">
-    <section class="why-choose">
-      <h3>Why Choose Us?</h3>
-      <div class="features">
-        <div class="feature">
-          <img src="/1.jpg" alt="Appointment Icon" />
-          <p>Book doctor appointments online</p>
+    <section class="features-section">
+      <div class="features-header">
+        <h2>Our Healthcare Services</h2>
+        <p>Comprehensive healthcare solutions designed for your wellbeing</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="feature-icon fas fa-calendar-plus"></i>
+          <h3>Online Appointments</h3>
+          <p>Book appointments with top doctors instantly. Skip the wait, choose your preferred time slot with 200+ verified doctors.</p>
+          <a href="book.html" class="feature-btn">Book Now <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div class="feature">
-          <img src="/2.jpg" alt="Health Records Icon" />
-          <p>Access your health records securely</p>
+        
+        <div class="feature-card">
+          <i class="feature-icon fas fa-video"></i>
+          <h3>Video Consultation</h3>
+          <p>Consult with doctors from home via secure video calls. Available for instant or scheduled consultations from ₹299.</p>
+          <a href="consultation.html" class="feature-btn">Start Consultation <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div class="feature">
-          <img src="/3.jpg" alt="Virtual Assistant Icon" />
-          <p>24x7 Virtual Assistant Support</p>
+        
+        <div class="feature-card">
+          <i class="feature-icon fas fa-user-md"></i>
+          <h3>Expert Doctors</h3>
+          <p>Connect with verified, experienced doctors across all specialties for the best medical care and treatments.</p>
+          <a href="doctors.html" class="feature-btn">Meet Doctors <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div class="feature">
-          <img src="/4.jpg" alt="Verified Doctors Icon" />
-          <p>Trusted and Verified Doctors</p>
+        
+        <div class="feature-card">
+          <i class="feature-icon fas fa-file-medical-alt"></i>
+          <h3>Medical Records</h3>
+          <p>Access your complete medical history, test results, and prescriptions anytime, anywhere with 100% security.</p>
+          <a href="#medical-reports" class="feature-btn">View Records <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <i class="feature-icon fas fa-robot"></i>
+          <h3>AI Health Assistant</h3>
+          <p>Get instant answers to health queries, symptom checking, and medical guidance 24/7 with smart AI technology.</p>
+          <button class="feature-btn" onclick="toggleAIChatbot()">Chat Now <i class="fas fa-comment"></i></button>
+        </div>
+        
+        <div class="feature-card">
+          <i class="feature-icon fas fa-ambulance"></i>
+          <h3>Emergency Care</h3>
+          <p>24/7 emergency medical assistance with instant response, ambulance service, and life support when you need it most.</p>
+          <a href="tel:+918945567890" class="feature-btn">Call Emergency <i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Happy Patients</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Expert Doctors</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-number">100K+</span>
+          <span class="stat-label">Appointments</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Available</span>
         </div>
       </div>
     </section>
 
     <!-- Symptom Checker Section -->
     <section class="symptom-checker">
-      <h3>Symptom Checker</h3>
-      <p>Type your symptoms and get suggestions instantly</p>
-      <input type="text" id="symptomInput" placeholder="e.g., headache, fever" />
-      <button onclick="checkSymptoms()">Check</button>
-      <div id="symptomResult"></div>
+      <div class="container">
+        <h3>AI Symptom Checker</h3>
+        <p>Describe your symptoms and get instant medical guidance</p>
+        <div class="symptom-input-group">
+          <input type="text" id="symptomInput" placeholder="e.g., headache, fever, cough" />
+          <button class="symptom-btn" onclick="checkSymptoms()">Check Symptoms</button>
+        </div>
+        <div id="symptomResult"></div>
+      </div>
+    </section>
+    
+    <!-- Medical Reports Section -->
+    <section class="medical-reports" id="medical-reports">
+      <div class="reports-container">
+        <div class="reports-header">
+          <i class="fas fa-file-medical"></i>
+          <h3>Access Your Medical Reports</h3>
+          <p>View and download your test results, prescriptions, and medical history securely</p>
+        </div>
+        
+        <div class="reports-form">
+          <div class="form-inputs">
+            <div class="input-row">
+              <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="reportPatientName" placeholder="Enter your full name" required>
+              </div>
+              <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="reportPatientEmail" placeholder="Enter your email address" required>
+              </div>
+            </div>
+            <button class="reports-btn" onclick="fetchMedicalReports()">
+              <i class="fas fa-search"></i>
+              View My Reports
+            </button>
+          </div>
+        </div>
+        
+        <!-- Reports Display Area -->
+        <div id="reportsDisplay" class="reports-display" style="display: none;">
+          <div class="reports-list-header">
+            <h4><i class="fas fa-clipboard-list"></i> Your Medical Reports</h4>
+            <p>Click on any report to view details or download</p>
+          </div>
+          <div id="reportsList" class="reports-list"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Blog Section -->
     <section class="blog-section">
-      <h3>Patient Blogs</h3>
-      <p>Read and share your experiences about treatments, recovery, and our hospital.</p>
+      <div class="blog-header">
+        <h3 class="section-title">Patient Stories & Experiences</h3>
+        <p class="blog-subtitle">Share your journey, inspire others, and connect with our healthcare community</p>
+      </div>
 
       <!-- Blog Form -->
-      <div class="blog-form">
-        <h4>Write a Blog</h4>
-        <input type="text" id="blogAuthor" placeholder="Your Name" />
-        <textarea id="blogContent" placeholder="Write your experience..." rows="4"></textarea>
-        <button onclick="addBlog()">Post Blog</button>
+      <div class="blog-form-container">
+        <div class="blog-form">
+          <div class="form-header">
+            <i class="fas fa-pen-fancy"></i>
+            <h4>Share Your Experience</h4>
+            <p>Help others by sharing your healthcare journey with HealthConnect+</p>
+          </div>
+          
+          <div class="form-inputs">
+            <div class="input-group">
+              <i class="fas fa-user"></i>
+              <input type="text" id="blogAuthor" placeholder="Your Name" />
+            </div>
+            <div class="input-group textarea-group">
+              <i class="fas fa-comment-medical"></i>
+              <textarea id="blogContent" placeholder="Share your experience, recovery story, or feedback about our services..." rows="4"></textarea>
+            </div>
+            <button class="blog-submit-btn" onclick="addBlog()">
+              <i class="fas fa-paper-plane"></i>
+              Share Your Story
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Blog List -->
-      <div id="blogList" class="blog-list">
-        <h4>Recent Blogs</h4>
-        <div id="blogsContainer"></div>
+      <!-- Patient Experiences Display -->
+      <div class="blog-list-container">
+        <div class="blog-list-header">
+          <i class="fas fa-heart"></i>
+          <h4>Patient Experiences</h4>
+          <p>Real stories from our healthcare community</p>
+        </div>
+        <div id="blogsContainer" class="blogs-grid"></div>
       </div>
+
     </section>
   </main>
 
-  <!-- Chatbot
-  <link rel="stylesheet" href="css/chatbot.css">
-  <div class="chatbot-container">
-    <button class="chatbot-icon" onclick="toggleChatbot()">💬</button>
-    <div class="chatbot-dialog" id="chatbot">
-      <div class="chatbot-header">
-        <span>Ask Me Anything</span>
-        <button onclick="toggleChatbot()">×</button>
+  <!-- Enhanced AI Chatbot -->
+  <div class="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 2000;">
+    <button class="chatbot-icon" onclick="toggleAIChatbot()" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #0a3d62, #145374); color: white; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.3s ease;">🤖</button>
+    
+    <div class="chatbot-dialog" id="ai-chatbot" style="display: none; width: 350px; height: 450px; background: white; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); position: absolute; bottom: 70px; right: 0; flex-direction: column;">
+      <div class="chatbot-header" style="background: linear-gradient(90deg, #0a3d62, #145374); color: white; padding: 15px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600;">🤖 HealthConnect AI Assistant</span>
+        <button onclick="toggleAIChatbot()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">×</button>
       </div>
-      <div class="chatbot-messages" id="chatbot-messages"></div>
-      <input type="text" id="chatbot-input" placeholder="Ask a question..." onkeydown="handleKey(event)">
+      
+      <div class="chatbot-messages" id="ai-chatbot-messages" style="flex: 1; padding: 15px; overflow-y: auto; max-height: 300px;"></div>
+      
+      <div class="chatbot-input" style="display: flex; border-top: 1px solid #eee; padding: 10px;">
+        <input type="text" id="ai-chatbot-input" placeholder="Ask about appointments, symptoms, or hospital info..." style="flex: 1; border: 1px solid #ddd; border-radius: 20px; padding: 8px 15px; outline: none;" onkeydown="handleAIKey(event)">
+        <button onclick="sendAIMessage()" style="background: #38ada9; border: none; color: white; padding: 8px 15px; margin-left: 8px; border-radius: 50%; cursor: pointer; transition: 0.3s ease;">📤</button>
+      </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -232,14 +1297,22 @@
         return;
       }
 
-      blogs.forEach(blog => {
+      blogs.forEach((blog, index) => {
         const blogDiv = document.createElement("div");
         blogDiv.className = "blog-post";
+        
+        // Add animation delay for staggered entrance
+        blogDiv.style.animationDelay = `${index * 0.1}s`;
+        
+        // Truncate content if too long
+        const truncatedContent = blog.content.length > 200 
+          ? blog.content.substring(0, 200) + '...' 
+          : blog.content;
 
         blogDiv.innerHTML = `
-          <div class="author"><strong>${blog.author}</strong></div>
+          <div class="author">${blog.author}</div>
           <div class="date">${blog.date}</div>
-          <div class="content">${blog.content}</div>
+          <div class="content">${truncatedContent}</div>
         `;
 
         container.appendChild(blogDiv);
@@ -307,87 +1380,454 @@
 
       setTimeout(() => addMessage(response, "bot-message"), 500);
     }
+    
+    // Medical Reports Functions
+    async function fetchMedicalReports() {
+      const name = document.getElementById('reportPatientName').value.trim();
+      const email = document.getElementById('reportPatientEmail').value.trim();
+      
+      if (!name || !email) {
+        alert('Please enter both your name and email address.');
+        return;
+      }
+      
+      try {
+        const response = await fetch('/api/medical-reports', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.reports.length > 0) {
+          displayReports(data.reports);
+        } else {
+          displayNoReports();
+        }
+        
+      } catch (error) {
+        console.error('Error fetching reports:', error);
+        alert('Error fetching reports. Please try again.');
+      }
+    }
+    
+    function displayReports(reports) {
+      const reportsDisplay = document.getElementById('reportsDisplay');
+      const reportsList = document.getElementById('reportsList');
+      
+      reportsList.innerHTML = '';
+      
+      reports.forEach(report => {
+        const reportCard = document.createElement('div');
+        reportCard.className = 'report-card';
+        
+        reportCard.innerHTML = `
+          <div class="report-header">
+            <div class="report-icon">
+              <i class="fas ${getReportIcon(report.type)}"></i>
+            </div>
+            <div class="report-info">
+              <h5>${report.title}</h5>
+              <p class="report-date">${new Date(report.date).toLocaleDateString()}</p>
+              <p class="report-type">${report.type}</p>
+            </div>
+          </div>
+          <div class="report-actions">
+            <button class="btn btn-primary btn-sm" onclick="viewReport('${report.id}')">
+              <i class="fas fa-eye"></i> View
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="downloadReport('${report.id}', '${report.title}')">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+        `;
+        
+        reportsList.appendChild(reportCard);
+      });
+      
+      reportsDisplay.style.display = 'block';
+    }
+    
+    function displayNoReports() {
+      const reportsDisplay = document.getElementById('reportsDisplay');
+      const reportsList = document.getElementById('reportsList');
+      
+      reportsList.innerHTML = `
+        <div class="no-reports">
+          <i class="fas fa-folder-open"></i>
+          <h4>No Reports Found</h4>
+          <p>No medical reports were found for the provided information. Please check your name and email address.</p>
+        </div>
+      `;
+      
+      reportsDisplay.style.display = 'block';
+    }
+    
+    function getReportIcon(type) {
+      const icons = {
+        'lab': 'fa-vial',
+        'xray': 'fa-x-ray',
+        'prescription': 'fa-prescription',
+        'consultation': 'fa-user-md',
+        'surgery': 'fa-procedures',
+        'general': 'fa-file-medical-alt'
+      };
+      return icons[type] || 'fa-file-medical-alt';
+    }
+    
+    async function viewReport(reportId) {
+      try {
+        const response = await fetch(`/api/medical-reports/${reportId}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          // Open report in a new tab
+          const reportWindow = window.open('', '_blank');
+          reportWindow.document.write(`
+            <html>
+              <head>
+                <title>${data.report.title}</title>
+                <style>
+                  body { font-family: Arial, sans-serif; padding: 20px; }
+                  .report-header { border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; }
+                  .report-content { line-height: 1.6; }
+                </style>
+              </head>
+              <body>
+                <div class="report-header">
+                  <h1>${data.report.title}</h1>
+                  <p><strong>Date:</strong> ${new Date(data.report.date).toLocaleDateString()}</p>
+                  <p><strong>Type:</strong> ${data.report.type}</p>
+                </div>
+                <div class="report-content">
+                  ${data.report.content}
+                </div>
+              </body>
+            </html>
+          `);
+        }
+      } catch (error) {
+        console.error('Error viewing report:', error);
+        alert('Error viewing report. Please try again.');
+      }
+    }
+    
+    async function downloadReport(reportId, reportTitle) {
+      try {
+        const response = await fetch(`/api/medical-reports/${reportId}/download`);
+        
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${reportTitle}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        } else {
+          alert('Error downloading report. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error downloading report:', error);
+        alert('Error downloading report. Please try again.');
+      }
+    }
+    
+    // AI Chatbot Functions
+    function toggleAIChatbot() {
+      const chatbot = document.getElementById('ai-chatbot');
+      if (chatbot.style.display === 'none' || chatbot.style.display === '') {
+        chatbot.style.display = 'flex';
+        // Add welcome message on first open
+        const messages = document.getElementById('ai-chatbot-messages');
+        if (messages.children.length === 0) {
+          addAIMessage('Hello! I\'m your HealthConnect+ AI assistant. I can help you with appointments, symptoms, hospital information, and more. How can I assist you today?', 'bot');
+        }
+      } else {
+        chatbot.style.display = 'none';
+      }
+    }
+    
+    function handleAIKey(e) {
+      if (e.key === 'Enter') {
+        sendAIMessage();
+      }
+    }
+    
+    async function sendAIMessage() {
+      const input = document.getElementById('ai-chatbot-input');
+      const message = input.value.trim();
+      
+      if (message === '') return;
+      
+      // Add user message
+      addAIMessage(message, 'user');
+      input.value = '';
+      
+      // Show typing indicator
+      addAIMessage('Typing...', 'bot', 'typing');
+      
+      try {
+        const response = await fetch('/api/chatbot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        const data = await response.json();
+        
+        // Remove typing indicator
+        const typingMsg = document.querySelector('.typing');
+        if (typingMsg) typingMsg.remove();
+        
+        // Add bot response
+        addAIMessage(data.response, 'bot');
+        
+        // Add suggestions if available
+        if (data.suggestions && data.suggestions.length > 0) {
+          setTimeout(() => {
+            data.suggestions.forEach(suggestion => {
+              addSuggestionButton(suggestion);
+            });
+          }, 500);
+        }
+        
+      } catch (error) {
+        console.error('Chatbot error:', error);
+        // Remove typing indicator
+        const typingMsg = document.querySelector('.typing');
+        if (typingMsg) typingMsg.remove();
+        
+        addAIMessage('Sorry, I\'m having trouble connecting right now. Please try again later or contact our support team.', 'bot');
+      }
+    }
+    
+    function addAIMessage(message, sender, className = '') {
+      const messagesContainer = document.getElementById('ai-chatbot-messages');
+      const messageDiv = document.createElement('div');
+      
+      messageDiv.style.marginBottom = '10px';
+      messageDiv.style.padding = '8px 12px';
+      messageDiv.style.borderRadius = '10px';
+      messageDiv.style.maxWidth = '80%';
+      messageDiv.style.fontSize = '0.9rem';
+      messageDiv.style.lineHeight = '1.4';
+      
+      if (className) {
+        messageDiv.className = className;
+      }
+      
+      if (sender === 'user') {
+        messageDiv.style.backgroundColor = '#0a3d62';
+        messageDiv.style.color = 'white';
+        messageDiv.style.marginLeft = 'auto';
+        messageDiv.style.textAlign = 'right';
+      } else {
+        messageDiv.style.backgroundColor = '#f1f1f1';
+        messageDiv.style.color = '#333';
+        messageDiv.style.marginRight = 'auto';
+      }
+      
+      messageDiv.textContent = message;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    function addSuggestionButton(suggestion) {
+      const messagesContainer = document.getElementById('ai-chatbot-messages');
+      const suggestionBtn = document.createElement('button');
+      
+      suggestionBtn.textContent = suggestion;
+      suggestionBtn.style.backgroundColor = '#38ada9';
+      suggestionBtn.style.color = 'white';
+      suggestionBtn.style.border = 'none';
+      suggestionBtn.style.padding = '6px 12px';
+      suggestionBtn.style.borderRadius = '15px';
+      suggestionBtn.style.margin = '3px';
+      suggestionBtn.style.cursor = 'pointer';
+      suggestionBtn.style.fontSize = '0.8rem';
+      suggestionBtn.style.transition = '0.3s ease';
+      
+      suggestionBtn.onclick = () => {
+        document.getElementById('ai-chatbot-input').value = suggestion;
+        sendAIMessage();
+      };
+      
+      suggestionBtn.onmouseover = () => {
+        suggestionBtn.style.backgroundColor = '#079992';
+      };
+      
+      suggestionBtn.onmouseout = () => {
+        suggestionBtn.style.backgroundColor = '#38ada9';
+      };
+      
+      const suggestionContainer = document.createElement('div');
+      suggestionContainer.style.marginBottom = '10px';
+      suggestionContainer.style.textAlign = 'left';
+      suggestionContainer.appendChild(suggestionBtn);
+      
+      messagesContainer.appendChild(suggestionContainer);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Mobile Menu Toggle Function
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const mobileToggle = document.querySelector('.mobile-menu-toggle');
+      
+      navLinks.classList.toggle('mobile-open');
+      mobileToggle.classList.toggle('active');
+    }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const navLinks = document.getElementById('navLinks');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        navLinks.classList.remove('mobile-open');
+        mobileToggle.classList.remove('active');
+      });
+    });
+
+    // =======================================
+    // APPOINTMENT POPUP FUNCTIONALITY
+    // =======================================
+    
+    function openAppointmentModal() {
+      // Since the popup is in book.html, we'll redirect to the booking page
+      // In a real-world scenario, you might want to load the popup content via AJAX
+      // For now, we'll redirect to the booking page with a special parameter
+      window.location.href = 'book.html?popup=true';
+    }
+    
+    // Alternative approach: Open a simplified quick booking popup
+    function openQuickBookingModal() {
+      // Create a quick booking popup directly on this page
+      const modal = document.createElement('div');
+      modal.id = 'quickBookingModal';
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        animation: fadeIn 0.3s ease forwards;
+      `;
+      
+      modal.innerHTML = `
+        <div style="
+          background: white;
+          border-radius: 20px;
+          width: 90%;
+          max-width: 500px;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+          transform: scale(0.7);
+          animation: modalSlideIn 0.3s ease forwards;
+        ">
+          <div style="
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          ">
+            <h3 style="margin: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-calendar-plus"></i> Quick Appointment Booking
+            </h3>
+            <button onclick="closeQuickBookingModal()" style="
+              background: rgba(255, 255, 255, 0.2);
+              border: none;
+              color: white;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.2rem;
+            ">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div style="padding: 2rem; text-align: center;">
+            <p style="margin-bottom: 2rem; color: #666; font-size: 1.1rem;">To book your appointment quickly, please visit our detailed booking page where you can choose your preferred doctor, time, and date.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a href="book.html" style="
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 50px;
+                text-decoration: none;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+              " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i class="fas fa-calendar-check"></i> Go to Booking Page
+              </a>
+              <button onclick="closeQuickBookingModal()" style="
+                background: #f8f9fa;
+                color: #6c757d;
+                border: 2px solid #dee2e6;
+                padding: 12px 24px;
+                border-radius: 50px;
+                cursor: pointer;
+                font-weight: 500;
+                transition: all 0.3s ease;
+              " onmouseover="this.style.background='#e9ecef'" onmouseout="this.style.background='#f8f9fa'">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      document.body.style.overflow = 'hidden';
+      
+      // Close on outside click
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeQuickBookingModal();
+        }
+      });
+    }
+    
+    function closeQuickBookingModal() {
+      const modal = document.getElementById('quickBookingModal');
+      if (modal) {
+        modal.style.opacity = '0';
+        document.body.style.overflow = 'auto';
+        setTimeout(() => {
+          modal.remove();
+        }, 300);
+      }
+    }
+    
+    // Use the quick booking modal approach for now
+    function openAppointmentModal() {
+      openQuickBookingModal();
+    }
   </script>
 
-  <!-- Blog Section Styles -->
-  <style>
-    .blog-section {
-      margin: 40px auto;
-      padding: 20px;
-      background: #f8f8f8;
-      border-radius: 12px;
-      max-width: 900px;
-    }
-    .blog-form {
-      margin-bottom: 20px;
-    }
-    .blog-form input, .blog-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-family: 'Poppins', sans-serif;
-    }
-    .blog-form button {
-      background: #0077cc;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .blog-list .blog-post {
-      background: #fff;
-      padding: 15px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .blog-list .author {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .blog-list .date {
-      font-size: 0.9em;
-      color: gray;
-      margin-bottom: 8px;
-    }
-    
-    /* User Navigation Styles */
-    #user-nav {
-      display: inline;
-    }
-    
-    #user-menu {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    #username-display {
-      color: #0077cc;
-      font-weight: 600;
-      margin-right: 10px;
-    }
-    
-    #logout-btn {
-      background: #dc3545;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-    }
-    
-    #logout-btn:hover {
-      background: #c82333;
-    }
-  </style>
 </body>
 </html>
-
-

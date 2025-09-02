@@ -3,20 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>Doctors | HealthConnect+</title>
+  <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="doctors.css">
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/08/20/03/20250820033102-AZO5AC7T.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="/js/navbar.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    <div class="emergency-text">
+      🚨 FOR EMERGENCY OR AMBULANCE SERVICES CALL 108 • URGENT CARE AVAILABLE 24/7 • CALL +91 8945567890 🚨
+    </div>
+  </div>
+  
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="container nav-container">
       <h1 class="logo">HealthConnect+</h1>
-      <div class="nav-links">
+      
+      <!-- Mobile Menu Toggle -->
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="book.html">Book Appointment</a>
-        <a href="doctors.html">Doctors</a>
+        <a href="consultation.html">Online Consultation</a>
+        <a href="doctors.html" class="active">Doctors</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
         <div id="user-nav">
@@ -67,6 +86,46 @@
         <p class="speciality"><b>General Physician</b></p>
         <p class="desc">Provides comprehensive care for patients of all ages.</p>
       </div>
+
+      <div class="doctor-card">
+        <img src="/doc1.jpg" alt="Dr. Priya Patel">
+        <h3>Dr. Priya Patel</h3>
+        <p class="experience">14+ years of experience</p>
+        <p class="speciality"><b>Orthopedic Surgeon</b></p>
+        <p class="desc">Specializes in bone, joint, and muscle treatments including sports injuries.</p>
+      </div>
+
+      <div class="doctor-card">
+        <img src="/doc2.jpg" alt="Dr. Vikram Singh">
+        <h3>Dr. Vikram Singh</h3>
+        <p class="experience">20+ years of experience</p>
+        <p class="speciality"><b>Neurologist</b></p>
+        <p class="desc">Expert in treating neurological disorders, migraines, and brain conditions.</p>
+      </div>
+
+      <div class="doctor-card">
+        <img src="/doc3.jpg" alt="Dr. Ananya Gupta">
+        <h3>Dr. Ananya Gupta</h3>
+        <p class="experience">11+ years of experience</p>
+        <p class="speciality"><b>Psychiatrist</b></p>
+        <p class="desc">Mental health specialist focused on anxiety, depression, and therapy.</p>
+      </div>
+
+      <div class="doctor-card">
+        <img src="/doc4.png" alt="Dr. Rajesh Khanna">
+        <h3>Dr. Rajesh Khanna</h3>
+        <p class="experience">16+ years of experience</p>
+        <p class="speciality"><b>ENT Specialist</b></p>
+        <p class="desc">Ear, Nose, and Throat specialist with expertise in sinus and hearing disorders.</p>
+      </div>
+
+      <div class="doctor-card">
+        <img src="/doctors.jpg" alt="Dr. Kavya Nair">
+        <h3>Dr. Kavya Nair</h3>
+        <p class="experience">13+ years of experience</p>
+        <p class="speciality"><b>Gynecologist</b></p>
+        <p class="desc">Women's health specialist providing comprehensive reproductive healthcare.</p>
+      </div>
     </div>
   </main>
 
@@ -103,6 +162,25 @@
         console.error('Error checking user session:', error);
       }
     }
+    
+    // Mobile Menu Toggle Function
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const mobileToggle = document.querySelector('.mobile-menu-toggle');
+      
+      navLinks.classList.toggle('mobile-open');
+      mobileToggle.classList.toggle('active');
+    }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const navLinks = document.getElementById('navLinks');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        navLinks.classList.remove('mobile-open');
+        mobileToggle.classList.remove('active');
+      });
+    });
   </script>
 
   <!-- User Navigation Styles -->

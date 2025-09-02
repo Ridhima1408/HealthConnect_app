@@ -1,4 +1,4 @@
-/* Reset and base styles */
+/* Enhanced Modern Theme for HealthConnect+ */
 * {
   margin: 0;
   padding: 0;
@@ -7,122 +7,626 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f8fb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
   color: #333;
+  line-height: 1.6;
 }
 
-/* Navbar styles */
-nav {
-  background-color: #0a3d62;
-  padding: 1rem;
-}
-
-nav .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-}
-
-nav h1 {
-  color: #fff;
-  font-size: 1.8rem;
+/* Emergency Banner Animation */
+.emergency-banner {
+  background: linear-gradient(90deg, #dc3545, #e74c3c, #dc3545);
+  color: white;
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
   font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid #c82333;
+  z-index: 100;
 }
 
-.nav-links a {
-  color: #fff;
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: 500;
+.emergency-text {
+  white-space: nowrap;
+  animation: scroll-left 30s linear infinite;
+  display: inline-block;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  text-decoration: underline;
+@keyframes scroll-left {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
 }
 
-/* Main content */
+/* Navbar styles handled by global.css - no overrides needed */
+
+/* Enhanced Main Content */
 .content {
-  padding: 40px 0;
-  width: 90%;
-  max-width: 600px;
-  margin: auto;
+  padding: 3rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Appointment section */
-.appointment-section {
-  background: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+/* Beautiful Form Header */
+.form-header {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-.appointment-section h2 {
-  margin-bottom: 15px;
-  color: #0a3d62;
+.form-header i {
+  font-size: 4rem;
+  color: #667eea;
+  margin-bottom: 1rem;
+  display: block;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.appointment-section p {
-  color: #555;
-  margin-bottom: 25px;
+.form-header h2 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Form styles */
-.appointment-form {
+.form-header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Modern Form Container */
+.appointment-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
-.appointment-form label {
-  align-self: flex-start;
-  margin: 10px 0 5px;
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group label i {
+  color: #667eea;
+  width: 16px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 1rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+/* Error Messages */
+.error-msg {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: none;
   font-weight: 500;
 }
 
-.appointment-form input,
-.appointment-form select {
-  padding: 10px;
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+/* Submit Button */
+.form-actions {
+  text-align: center;
+  margin-top: 2rem;
 }
 
-.appointment-form input:focus,
-.appointment-form select:focus {
-  border-color: #0a3d62;
-  outline: none;
-}
-
-.appointment-form button {
-  background-color: #38ada9;
+.submit-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-  padding: 12px 30px;
-  font-size: 16px;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 50px;
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.appointment-form button:hover {
-  background-color: #079992;
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Response Messages */
+.response-msg {
+  margin: 2rem 0;
+}
+
+.success-msg {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+}
+
+.success-msg i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.appointment-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.appointment-details p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.error-msg {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+}
+
+.error-msg i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Info Card */
+.appointment-info {
+  margin-top: 3rem;
+}
+
+.info-card {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+}
+
+.info-card i {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+
+.info-card h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-card li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.info-card li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #2ecc71;
+  font-weight: bold;
 }
 
 /* Footer */
 footer {
-  background-color: #0a3d62;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: white;
   text-align: center;
-  padding: 1rem 0;
-  margin-top: 60px;
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .appointment-section {
+    padding: 2rem 1rem;
+  }
+  
+  .form-header h2 {
+    font-size: 2rem;
+  }
+  
+  .info-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Loading Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fa-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Smooth Transitions */
+* {
+  transition: all 0.3s ease;
+}
+
+input, select, button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   APPOINTMENT POPUP MODAL STYLES
+   ======================================== */
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Modal Container */
+.modal-container {
+  background: white;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  transform: scale(0.7);
+  animation: modalSlideIn 0.3s ease forwards;
+  position: relative;
+}
+
+@keyframes modalSlideIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-header h3 i {
+  font-size: 1.3rem;
+}
+
+.modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 2rem;
+}
+
+/* Quick Form Grid */
+.quick-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.quick-form-grid .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.quick-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-form .form-group label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.quick-form .form-group label i {
+  color: #667eea;
+  width: 14px;
+  font-size: 0.9rem;
+}
+
+.quick-form input,
+.quick-form select {
+  padding: 0.8rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.quick-form input:focus,
+.quick-form select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.quick-form input.error,
+.quick-form select.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e1e8ed;
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 2px solid #dee2e6;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal Response Messages */
+.modal-body .response-msg {
+  margin: 1.5rem 0 0 0;
+}
+
+.modal-body .success-msg,
+.modal-body .error-msg {
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.modal-body .success-msg {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+.modal-body .error-msg {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.modal-body .appointment-details {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  font-size: 0.85rem;
+}
+
+.modal-body .appointment-details p {
+  margin: 0.3rem 0;
+  font-weight: 500;
+}
+
+/* Mobile Responsiveness for Modal */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 95%;
+    margin: 1rem;
+    max-height: 95vh;
+  }
+  
+  .modal-header {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .quick-form-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-container {
+    width: 98%;
+    margin: 0.5rem;
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.1rem;
+  }
 }

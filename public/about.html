@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>About | HealthConnect+</title>
+  <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="about.css">
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/08/20/03/20250820033102-AZO5AC7T.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="/js/navbar.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     .services-section {
       margin: 50px 0;
@@ -67,13 +70,29 @@
 </head>
 <body>
   
-  <!-- Navbar -->
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    <div class="emergency-text">
+      🚨 FOR EMERGENCY OR AMBULANCE SERVICES CALL 108 • URGENT CARE AVAILABLE 24/7 • CALL +91 8945567890 🚨
+    </div>
+  </div>
+  
+  <!-- Navigation Bar -->
   <nav class="navbar">
-    <div class="nav-container">
+    <div class="container nav-container">
       <h1 class="logo">HealthConnect+</h1>
-      <div class="nav-links">
+      
+      <!-- Mobile Menu Toggle -->
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="book.html">Book Appointment</a>
+        <a href="consultation.html">Online Consultation</a>
         <a href="doctors.html">Doctors</a>
         <a href="about.html" class="active">About</a>
         <a href="contact.html">Contact</a>
@@ -157,6 +176,264 @@
   </div>
 </section>
 
+    <!-- Hospital Services Section -->
+    <section class="hospital-services">
+      <h2 class="services-title">Our Comprehensive Healthcare Services</h2>
+      
+      <!-- Lab Tests Section -->
+      <div class="service-category">
+        <h3 class="category-title">
+          <i class="fas fa-vial"></i>
+          Laboratory & Diagnostic Tests
+        </h3>
+        <div class="service-grid">
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <h4>Blood Tests</h4>
+            <p>Complete Blood Count (CBC), Blood Sugar, Lipid Profile, Liver Function Tests, Kidney Function Tests</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-x-ray"></i>
+            </div>
+            <h4>Imaging Services</h4>
+            <p>X-Ray, CT Scan, MRI, Ultrasound, Mammography, DEXA Scan</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-microscope"></i>
+            </div>
+            <h4>Pathology</h4>
+            <p>Biopsy, Cytology, Histopathology, Microbiology, Serology</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-dna"></i>
+            </div>
+            <h4>Specialized Tests</h4>
+            <p>Genetic Testing, Allergy Tests, Hormone Panels, Cardiac Markers</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-lungs"></i>
+            </div>
+            <h4>Pulmonary Function</h4>
+            <p>Spirometry, Peak Flow, Lung Capacity, Respiratory Function Tests</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h4>Ophthalmology Tests</h4>
+            <p>Eye Pressure, Visual Field, Retinal Examination, Color Vision Tests</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Surgery Section -->
+      <div class="service-category">
+        <h3 class="category-title">
+          <i class="fas fa-procedures"></i>
+          Surgical Procedures & Operations
+        </h3>
+        <div class="service-grid">
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h4>Cardiac Surgery</h4>
+            <p>Heart Bypass, Valve Replacement, Angioplasty, Pacemaker Implantation</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h4>Neurosurgery</h4>
+            <p>Brain Tumor Surgery, Spinal Surgery, Craniotomy, Stereotactic Surgery</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-bone"></i>
+            </div>
+            <h4>Orthopedic Surgery</h4>
+            <p>Joint Replacement, Fracture Repair, Arthroscopy, Spine Surgery</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-female"></i>
+            </div>
+            <h4>Gynecological Surgery</h4>
+            <p>Hysterectomy, Cesarean Section, Laparoscopy, Fertility Procedures</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-cut"></i>
+            </div>
+            <h4>General Surgery</h4>
+            <p>Appendectomy, Hernia Repair, Gallbladder Surgery, Colon Surgery</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <h4>Minimally Invasive Surgery</h4>
+            <p>Laparoscopic Surgery, Robotic Surgery, Endoscopic Procedures</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Medical Specialties Section -->
+      <div class="service-category">
+        <h3 class="category-title">
+          <i class="fas fa-user-md"></i>
+          Medical Specialties & Departments
+        </h3>
+        <div class="service-grid">
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-heart-pulse"></i>
+            </div>
+            <h4>Cardiology</h4>
+            <p>Heart diseases, Arrhythmia, Heart failure, Hypertension management</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-head-side-virus"></i>
+            </div>
+            <h4>Neurology</h4>
+            <p>Stroke, Epilepsy, Parkinson's, Multiple Sclerosis, Headache disorders</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-child"></i>
+            </div>
+            <h4>Pediatrics</h4>
+            <p>Child healthcare, Vaccinations, Growth monitoring, Pediatric emergencies</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-baby"></i>
+            </div>
+            <h4>Obstetrics & Gynecology</h4>
+            <p>Pregnancy care, Delivery, Women's health, Reproductive medicine</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-lungs-virus"></i>
+            </div>
+            <h4>Pulmonology</h4>
+            <p>Asthma, COPD, Lung infections, Sleep disorders, Respiratory care</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-stomach"></i>
+            </div>
+            <h4>Gastroenterology</h4>
+            <p>Digestive disorders, Liver diseases, Endoscopy, IBD treatment</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-kidney"></i>
+            </div>
+            <h4>Nephrology</h4>
+            <p>Kidney diseases, Dialysis, Kidney transplant, Hypertension</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-syringe"></i>
+            </div>
+            <h4>Endocrinology</h4>
+            <p>Diabetes, Thyroid disorders, Hormone imbalances, Metabolic diseases</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-prescription-bottle-medical"></i>
+            </div>
+            <h4>Oncology</h4>
+            <p>Cancer treatment, Chemotherapy, Radiation therapy, Tumor surgery</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h4>Psychiatry</h4>
+            <p>Mental health, Depression, Anxiety, Addiction treatment, Counseling</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-allergies"></i>
+            </div>
+            <h4>Dermatology</h4>
+            <p>Skin conditions, Acne treatment, Skin cancer, Cosmetic dermatology</p>
+          </div>
+          
+          <div class="service-item">
+            <div class="service-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h4>Ophthalmology</h4>
+            <p>Eye care, Cataract surgery, Glaucoma treatment, Vision correction</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Emergency Services -->
+      <div class="service-category emergency-services">
+        <h3 class="category-title">
+          <i class="fas fa-ambulance"></i>
+          Emergency & Critical Care Services
+        </h3>
+        <div class="emergency-grid">
+          <div class="emergency-item">
+            <i class="fas fa-hospital"></i>
+            <h4>24/7 Emergency Room</h4>
+            <p>Round-the-clock emergency medical care with experienced emergency physicians</p>
+          </div>
+          
+          <div class="emergency-item">
+            <i class="fas fa-heartbeat"></i>
+            <h4>Intensive Care Unit (ICU)</h4>
+            <p>Advanced life support and monitoring for critically ill patients</p>
+          </div>
+          
+          <div class="emergency-item">
+            <i class="fas fa-ambulance"></i>
+            <h4>Ambulance Services</h4>
+            <p>Emergency transport with paramedic support and advanced life support equipment</p>
+          </div>
+          
+          <div class="emergency-item">
+            <i class="fas fa-phone-alt"></i>
+            <h4>Emergency Hotline</h4>
+            <p>24/7 emergency helpline: 8945567890 for immediate medical assistance</p>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -192,6 +469,25 @@
         console.error('Error checking user session:', error);
       }
     }
+    
+    // Mobile Menu Toggle Function
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const mobileToggle = document.querySelector('.mobile-menu-toggle');
+      
+      navLinks.classList.toggle('mobile-open');
+      mobileToggle.classList.toggle('active');
+    }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const navLinks = document.getElementById('navLinks');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        navLinks.classList.remove('mobile-open');
+        mobileToggle.classList.remove('active');
+      });
+    });
   </script>
 
   <!-- User Navigation Styles -->
@@ -226,6 +522,245 @@
     
     #logout-btn:hover {
       background: #c82333;
+    }
+  
+    
+    /* Hospital Services Styles */
+    .hospital-services {
+      margin: 80px 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 20px;
+    }
+    
+    .services-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #0a3d62;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .services-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, #38ada9, #0a3d62);
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    
+    .service-category {
+      margin-bottom: 60px;
+      background: white;
+      border-radius: 15px;
+      padding: 40px 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .category-title {
+      text-align: center;
+      font-size: 2rem;
+      color: #0a3d62;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .category-title i {
+      color: #38ada9;
+      font-size: 2.2rem;
+    }
+    
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    
+    .service-item {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #38ada9, #0a3d62);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .service-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(56, 173, 169, 0.2);
+      border-color: #38ada9;
+    }
+    
+    .service-item:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #38ada9, #0a3d62);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .service-icon i {
+      color: white;
+      font-size: 1.8rem;
+    }
+    
+    .service-item:hover .service-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .service-item h4 {
+      font-size: 1.4rem;
+      color: #0a3d62;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .service-item p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    
+    /* Emergency Services Special Styling */
+    .emergency-services {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+    }
+    
+    .emergency-services .category-title {
+      color: white;
+    }
+    
+    .emergency-services .category-title i {
+      color: #ffc107;
+    }
+    
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .emergency-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      backdrop-filter: blur(10px);
+    }
+    
+    .emergency-item:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .emergency-item i {
+      font-size: 3rem;
+      color: #ffc107;
+      margin-bottom: 15px;
+      display: block;
+    }
+    
+    .emergency-item h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .emergency-item p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+    
+    /* Font Awesome Icons Import */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .services-title {
+        font-size: 2rem;
+      }
+      
+      .category-title {
+        font-size: 1.6rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .emergency-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .hospital-services {
+        margin: 40px 0;
+        padding: 30px 15px;
+      }
+      
+      .service-category {
+        padding: 30px 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .services-title {
+        font-size: 1.8rem;
+      }
+      
+      .category-title {
+        font-size: 1.4rem;
+      }
+      
+      .service-item {
+        padding: 20px;
+      }
+      
+      .service-icon {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .service-icon i {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </body>

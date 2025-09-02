@@ -3,34 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Contact | HealthConnect+</title>
+  <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="contact.css">
     <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/08/20/03/20250820033102-AZO5AC7T.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="/js/navbar.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    <div class="emergency-text">
+      🚨 FOR EMERGENCY OR AMBULANCE SERVICES CALL 108 • URGENT CARE AVAILABLE 24/7 • CALL +91 8945567890 🚨
+    </div>
+  </div>
+  
+  <!-- Navigation Bar -->
   <nav class="navbar">
-  <div class="nav-container">
-    <h1 class="logo">HealthConnect+</h1>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="book.html">Book Appointment</a>
-      <a href="doctors.html">Doctors</a>
-      <a href="about.html">About</a>
-      <a href="contact.html" class="active">Contact</a>
-      <div id="user-nav">
-        <a href="login.html" id="login-link">Login</a>
-        <div id="user-menu" style="display: none;">
-          <span id="username-display">Welcome, User!</span>
-          <form action="/logout" method="POST" style="display: inline;">
-            <button type="submit" id="logout-btn">Logout</button>
-          </form>
+    <div class="container nav-container">
+      <h1 class="logo">HealthConnect+</h1>
+      
+      <!-- Mobile Menu Toggle -->
+      <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="book.html">Book Appointment</a>
+        <a href="consultation.html">Online Consultation</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+        <div id="user-nav">
+          <a href="login.html" id="login-link">Login</a>
+          <div id="user-menu" style="display: none;">
+            <span id="username-display">Welcome, User!</span>
+            <form action="/logout" method="POST" style="display: inline;">
+              <button type="submit" id="logout-btn">Logout</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
  
   <!-- Contact Section -->
   <main class="content container">
@@ -94,6 +113,25 @@
         console.error('Error checking user session:', error);
       }
     }
+    
+    // Mobile Menu Toggle Function
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const mobileToggle = document.querySelector('.mobile-menu-toggle');
+      
+      navLinks.classList.toggle('mobile-open');
+      mobileToggle.classList.toggle('active');
+    }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const navLinks = document.getElementById('navLinks');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        navLinks.classList.remove('mobile-open');
+        mobileToggle.classList.remove('active');
+      });
+    });
   </script>
 
   <!-- User Navigation Styles -->

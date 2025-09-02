@@ -6,22 +6,50 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* Emergency Banner */
+.emergency-banner {
+  background: linear-gradient(90deg, #dc3545, #e74c3c, #dc3545);
+  color: white;
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid #c82333;
+}
+
+.emergency-text {
+  white-space: nowrap;
+  animation: scroll-left 30s linear infinite;
+  display: inline-block;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 body {
   line-height: 1.6;
-  background-color: #f4f8fb;
-  color: #2f0e65;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #2c3e50;
   scroll-behavior: smooth;
 }
 
 /* Navbar */
 .navbar {
-  background: linear-gradient(90deg, #0a3d62, #145374);
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
   color: white;
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
 .logo {
