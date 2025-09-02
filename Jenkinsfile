@@ -60,11 +60,17 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                withKubeConfig([credentialsId: 'eks-kubeconfig']) {
+                withCredentials([
+                    file(credentialsId: 'eks-kubeconfig', variable: 'KUBECONFIG'),
+                    [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']
+                ]) {
                     sh """
                         kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-                        kubectl set image deployment/${APP_NAME} ${APP_NAME}=${ECR_REPO}:${BUILD_NUMBER} -n ${NAMESPACE} || \
-                        kubectl apply -f k8s/ -n ${NAMESPACE}
+                        if kubectl get deployment ${APP_NAME} -n ${NAMESPACE}; then
+                            kubectl set image deployment/${APP_NAME} ${APP_NAME}=${ECR_REPO}:${BUILD_NUMBER} -n ${NAMESPACE}
+                        else
+                            kubectl apply -f k8s/ -n ${NAMESPACE}
+                        fi
                         kubectl rollout status deployment/${APP_NAME} -n ${NAMESPACE} --timeout=300s
                     """
                 }
