@@ -1,22 +1,5 @@
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongodb-pvc
-  namespace: healthconnect
-  labels:
-    app: mongodb
-    component: database
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: gp2  # AWS EBS GP2 (change based on your cloud provider)
-
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongodb-config
@@ -35,10 +18,6 @@ data:
     net:
       port: 27017
       bindIp: 0.0.0.0
-    processManagement:
-      timeZoneInfo: /usr/share/zoneinfo
-    replication:
-      replSetName: healthconnect-rs
 
 ---
 apiVersion: apps/v1
@@ -49,11 +28,10 @@ metadata:
   labels:
     app: mongodb
     component: database
-    tier: backend
 spec:
   replicas: 1
   strategy:
-    type: Recreate  # Ensures only one MongoDB instance at a time
+    type: Recreate
   selector:
     matchLabels:
       app: mongodb
@@ -63,35 +41,32 @@ spec:
       labels:
         app: mongodb
         component: database
-        tier: backend
     spec:
       containers:
       - name: mongodb
         image: mongo:7
         ports:
         - containerPort: 27017
-          name: mongo-port
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
             secretKeyRef:
               name: mongodb-secret
               key: username
-              optional: true
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongodb-secret
               key: password
-              optional: true
         - name: MONGO_INITDB_DATABASE
           value: healthconnect
         volumeMounts:
-        - name: mongodb-storage
+        - name: mongodb-data
           mountPath: /data/db
         - name: mongodb-config-volume
           mountPath: /etc/mongod.conf
           subPath: mongod.conf
+        command: ["mongod", "--config", "/etc/mongod.conf"]
         resources:
           requests:
             memory: "512Mi"
@@ -101,38 +76,24 @@ spec:
             cpu: "500m"
         livenessProbe:
           exec:
-            command:
-            - mongosh
-            - --eval
-            - "db.adminCommand('ping')"
+            command: ["mongo", "--eval", "db.adminCommand('ping')"]
           initialDelaySeconds: 30
           periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
         readinessProbe:
           exec:
-            command:
-            - mongosh
-            - --eval
-            - "db.adminCommand('ping')"
+            command: ["mongo", "--eval", "db.adminCommand('ping')"]
           initialDelaySeconds: 15
           periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
       volumes:
-      - name: mongodb-storage
-        persistentVolumeClaim:
-          claimName: mongodb-pvc
+      - name: mongodb-data
+        hostPath:
+          path: /mnt/data/mongodb   # host node path
+          type: DirectoryOrCreate   # creates folder if it doesn’t exist
       - name: mongodb-config-volume
         configMap:
           name: mongodb-config
       nodeSelector:
         kubernetes.io/os: linux
-      tolerations:
-      - key: "app"
-        operator: "Equal"
-        value: "database"
-        effect: "NoSchedule"
 
 ---
 apiVersion: v1
@@ -140,9 +101,6 @@ kind: Service
 metadata:
   name: mongodb-service
   namespace: healthconnect
-  labels:
-    app: mongodb
-    component: database
 spec:
   type: ClusterIP
   selector:
@@ -151,23 +109,3 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
-    protocol: TCP
-    name: mongo-port
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongodb-secret
-  namespace: healthconnect
-  labels:
-    app: mongodb
-    component: database
-type: Opaque
-data:
-  # Default credentials (base64 encoded)
-  # Username: healthconnect (base64: aGVhbHRoY29ubmVjdA==)
-  # Password: healthconnect123 (base64: aGVhbHRoY29ubmVjdDEyMw==)
-  # Change these in production!
-  username: aGVhbHRoY29ubmVjdA==
-  password: aGVhbHRoY29ubmVjdDEyMw==

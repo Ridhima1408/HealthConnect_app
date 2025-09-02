@@ -69,7 +69,7 @@ spec:
     spec:
       containers:
       - name: healthconnect-app
-        image: yourusername/healthconnect-app:latest  # This will be updated by Jenkins
+        image: 822687512925.dkr.ecr.ap-south-1.amazonaws.com/healthconnect-app:latest  # This will be updated by Jenkins
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -250,7 +250,7 @@ spec:
     spec:
       containers:
       - name: healthconnect-worker
-        image: yourusername/healthconnect-app:latest  # This will be updated by Jenkins
+        image: 822687512925.dkr.ecr.ap-south-1.amazonaws.com/healthconnect-app:latest  # This will be updated by Jenkins
         imagePullPolicy: Always
         command: ["node"]
         args: ["worker.js"]  # If you have background job processing
