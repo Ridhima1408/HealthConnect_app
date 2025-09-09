@@ -35,6 +35,7 @@ spec:
   selector:
     matchLabels:
       app: mongodb
+      component: database
   template:
     metadata:
       labels:
@@ -107,6 +108,7 @@ spec:
   type: ClusterIP
   selector:
     app: mongodb
+    component: database
   ports:
   - port: 27017
     targetPort: 27017
