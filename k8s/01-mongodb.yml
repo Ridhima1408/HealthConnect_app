@@ -35,7 +35,6 @@ spec:
   selector:
     matchLabels:
       app: mongodb
-      component: database
   template:
     metadata:
       labels:
@@ -69,10 +68,10 @@ spec:
         command: ["mongod", "--config", "/etc/mongod.conf"]
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "250m"
+            memory: "200Mi"
+            cpu: "150m"
           limits:
-            memory: "1Gi"
+            memory: "512Mi"
             cpu: "500m"
         livenessProbe:
           exec:
@@ -90,9 +89,8 @@ spec:
           failureThreshold: 3
       volumes:
       - name: mongodb-data
-        hostPath:
-          path: /mnt/data/mongodb   # host node path
-          type: DirectoryOrCreate   # creates folder if it doesn’t exist
+        persistentVolumeClaim:
+          claimName: mongodb-pvc
       - name: mongodb-config-volume
         configMap:
           name: mongodb-config
@@ -109,7 +107,6 @@ spec:
   type: ClusterIP
   selector:
     app: mongodb
-    component: database
   ports:
   - port: 27017
     targetPort: 27017
