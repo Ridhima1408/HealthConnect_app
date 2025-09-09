@@ -55,7 +55,6 @@ spec:
   selector:
     matchLabels:
       app: healthconnect-app
-      component: application
   template:
     metadata:
       labels:
@@ -223,7 +222,6 @@ metadata:
   labels:
     app: healthconnect-app
     component: application
-automountServiceAccountToken: false
 
 ---
 apiVersion: apps/v1
