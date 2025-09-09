@@ -27,7 +27,9 @@ spec:
           mountPath: /data/db
       volumes:
       - name: mongodb-storage
-        emptyDir: {}
+        hostPath:
+          path: /tmp/mongodb-data
+          type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
