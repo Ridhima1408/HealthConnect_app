@@ -15,10 +15,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo '🐳 Building Docker image...'
-                sh """
-                    docker build -t ${DOCKER_REPO}:${BUILD_NUMBER} .
-                    docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${DOCKER_REPO}:latest
-                """
+                sh '''
+                    docker build -t $DOCKER_REPO:$BUILD_NUMBER .
+                    docker tag $DOCKER_REPO:$BUILD_NUMBER $DOCKER_REPO:latest
+                '''
             }
         }
 
@@ -27,31 +27,37 @@ pipeline {
                 stage('Push to DockerHub') {
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                            sh """
-                                echo $PASS | docker login -u $USER --password-stdin
-                                docker push ${DOCKER_REPO}:${BUILD_NUMBER}
-                                docker push ${DOCKER_REPO}:latest
-                            """
+                            withEnv(["DOCKER_CONFIG=${WORKSPACE}/dockerconf_dhub"]) {
+                                sh '''
+                                    mkdir -p "$DOCKER_CONFIG"
+                                    # login (password from Jenkins credential via STDIN)
+                                    echo "$PASS" | docker login -u "$USER" --password-stdin
+                                    docker push $DOCKER_REPO:$BUILD_NUMBER
+                                    docker push $DOCKER_REPO:latest
+                                '''
+                            }
                         }
                     }
                 }
 
                 stage('Push to AWS ECR') {
                     steps {
-                        withCredentials([[
-                            $class: 'AmazonWebServicesCredentialsBinding',
-                            credentialsId: 'aws-credentials'
-                        ]]) {
-                            sh """
-                                aws ecr get-login-password --region ${AWS_REGION} | \
-                                docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                                
-                                docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:${BUILD_NUMBER}
-                                docker tag ${DOCKER_REPO}:${BUILD_NUMBER} ${ECR_REPO}:latest
-                                
-                                docker push ${ECR_REPO}:${BUILD_NUMBER}
-                                docker push ${ECR_REPO}:latest
-                            """
+                        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                            withEnv(["DOCKER_CONFIG=${WORKSPACE}/dockerconf_ecr"]) {
+                                sh '''
+                                    mkdir -p "$DOCKER_CONFIG"
+                                    # login to AWS ECR using aws cli
+                                    aws ecr get-login-password --region $AWS_REGION | \
+                                      docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+                                    # tag and push
+                                    docker tag $DOCKER_REPO:$BUILD_NUMBER $ECR_REPO:$BUILD_NUMBER
+                                    docker tag $DOCKER_REPO:$BUILD_NUMBER $ECR_REPO:latest
+
+                                    docker push $ECR_REPO:$BUILD_NUMBER
+                                    docker push $ECR_REPO:latest
+                                '''
+                            }
                         }
                     }
                 }
@@ -64,15 +70,15 @@ pipeline {
                     file(credentialsId: 'eks-kubeconfig', variable: 'KUBECONFIG'),
                     [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']
                 ]) {
-                    sh """
-                        kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-                        if kubectl get deployment ${APP_NAME} -n ${NAMESPACE}; then
-                            kubectl set image deployment/${APP_NAME} ${APP_NAME}=${ECR_REPO}:${BUILD_NUMBER} -n ${NAMESPACE}
+                    sh '''
+                        kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+                        if kubectl get deployment $APP_NAME -n $NAMESPACE; then
+                            kubectl set image deployment/$APP_NAME $APP_NAME=$ECR_REPO:$BUILD_NUMBER -n $NAMESPACE
                         else
-                            kubectl apply -f k8s/ -n ${NAMESPACE}
+                            kubectl apply -f k8s/ -n $NAMESPACE
                         fi
-                        kubectl rollout status deployment/${APP_NAME} -n ${NAMESPACE} --timeout=300s
-                    """
+                        kubectl rollout status deployment/$APP_NAME -n $NAMESPACE --timeout=300s
+                    '''
                 }
             }
         }
